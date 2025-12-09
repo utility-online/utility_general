@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Mio Sito Web</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Chi Siamo</a></li>
+            <li><a href="#servizi">Servizi</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contatti">Contatti</a></li>
+        </ul>
+    </nav>
+
+    <!-- Slider Immagini -->
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide active">
+                <img src="images/foto1.jpg" alt="Foto 1">
+            </div>
+            <div class="slide">
+                <img src="images/foto2.jpg" alt="Foto 2">
+            </div>
+            <div class="slide">
+                <img src="images/foto3.jpg" alt="Foto 3">
+            </div>
+            <div class="slide">
+                <img src="images/foto4.jpg" alt="Foto 4">
+            </div>
+        </div>
+        
+        <!-- Pulsanti di navigazione -->
+        <button class="prev" id="prevBtn">&#10094;</button>
+        <button class="next" id="nextBtn">&#10095;</button>
+        
+        <!-- Indicatori -->
+        <div class="dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+        </div>
+    </div>
+
+    <!-- Contenuto principale -->
+    <main class="content">
+        <section id="home">
+            <h1>Benvenuto nel mio sito!</h1>
+            <p>Questo è un esempio di pagina web con slider e menu hamburger.</p>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
