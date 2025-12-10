@@ -68,16 +68,6 @@ function prevSlide() {
     showSlide(currentSlide - 1);
 }
 
-// Event listeners per i pulsanti
-nextBtn.addEventListener('click', () => {
-    nextSlide();
-    resetInterval();
-});
-
-prevBtn.addEventListener('click', () => {
-    prevSlide();
-    resetInterval();
-});
 
 // Event listeners per i dots
 dots.forEach((dot, index) => {
