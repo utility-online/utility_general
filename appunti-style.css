@@ -367,3 +367,111 @@
         font-size: 2em;
     }
 }
+
+
+/* ===== STILI BLOCCHI CODICE ===== */
+
+/* Blocco codice principale */
+.code-block {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 2;
+    position: relative;
+}
+
+/* Header del codice (SAS + Copia) */
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;      /* ← SPAZIO TRA HEADER E CODICE */
+    padding-bottom: 15px;
+    border-bottom: 1px solid #444;
+}
+
+/* Linguaggio (es. "SAS") */
+.code-language {
+    color: #f8f8f2;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Pulsante Copia */
+.copy-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.copy-btn:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+}
+
+.copy-btn:active {
+    transform: translateY(0);
+}
+
+/* Codice */
+.code-block pre {
+    margin: 0;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Sintassi SAS evidenziata */
+.sas-keyword {
+    color: #ff79c6;
+    font-weight: bold;
+}
+
+.sas-function {
+    color: #50fa7b;
+}
+
+.sas-string {
+    color: #f1fa8c;
+}
+
+.sas-comment {
+    color: #6272a4;
+    font-style: italic;
+}
+
+.sas-number {
+    color: #bd93f9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .code-block {
+        font-size: 13px;
+        padding: 15px;
+    }
+    
+    .code-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
