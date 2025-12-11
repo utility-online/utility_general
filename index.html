@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Mio Sito Web</title>
+    <title>I Miei Appunti</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="navigation-style.css">
 </head>
 <body>
+    <!-- BARRA SUPERIORE FISSA -->
+    
     <!-- Menu Hamburger -->
     <div class="hamburger" id="hamburger">
         <div class="line"></div>
@@ -14,14 +17,14 @@
         <div class="line"></div>
     </div>
 
-    <!-- Menu Laterale -->
+    <!-- Menu Laterale SEMPLICE -->
     <nav class="sidebar" id="sidebar">
         <div class="close-btn" id="closeBtn">&times;</div>
         <ul class="menu">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#sas"> SAS Programming</a></li>
-            <li><a href="#servizi"> Utility & Tools</a></li>
-            <li><a href="#linux"> Linux & Shell</a></li>
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="linux.html">🐧 Linux & Shell</a></li>
         </ul>
     </nav>
 
@@ -37,22 +40,55 @@
             <div class="slide">
                 <img src="images/foto3.jpg" alt="Foto 3">
             </div>
+            <div class="slide">
+                <img src="images/foto4.jpg" alt="Foto 4">
+            </div>
         </div>
         
-
+        <!-- Pulsanti di navigazione -->
+        <button class="prev" id="prevBtn">&#10094;</button>
+        <button class="next" id="nextBtn">&#10095;</button>
         
         <!-- Indicatori -->
         <div class="dots">
             <span class="dot active" data-slide="0"></span>
             <span class="dot" data-slide="1"></span>
             <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
         </div>
     </div>
 
     <!-- Contenuto principale -->
     <main class="content">
         <section id="home">
-            <h1>Benvenuto in questo sito!</h1>
+            <h1>Benvenuto nei miei Appunti Tecnici</h1>
+            <p>Qui troverai guide, tutorial e riferimenti rapidi per SAS, utility varie e Linux.</p>
+            <p>Utilizza il menu in alto a sinistra per navigare tra le sezioni.</p>
+            
+            <div style="margin-top: 40px;">
+                <h2>📂 Sezioni Disponibili</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                    
+                    <a href="sas-programming.html" style="display: block; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 10px; text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em;">📊</div>
+                        <h3 style="margin: 10px 0; color: white;">SAS Programming</h3>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 14px;">Appunti e guide SAS</p>
+                    </a>
+                    
+                    <a href="utility.html" style="display: block; padding: 30px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; text-decoration: none; border-radius: 10px; text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em;">🛠️</div>
+                        <h3 style="margin: 10px 0; color: white;">Utility & Tools</h3>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 14px;">Strumenti e utility</p>
+                    </a>
+                    
+                    <a href="linux.html" style="display: block; padding: 30px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; text-decoration: none; border-radius: 10px; text-align: center; transition: transform 0.3s ease;">
+                        <div style="font-size: 3em;">🐧</div>
+                        <h3 style="margin: 10px 0; color: white;">Linux & Shell</h3>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 14px;">Comandi e script Linux</p>
+                    </a>
+                    
+                </div>
+            </div>
         </section>
     </main>
 

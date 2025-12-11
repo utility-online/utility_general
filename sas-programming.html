@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAS Programming - I Miei Appunti</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="appunti-style.css">
+    <link rel="stylesheet" href="navigation-style.css">
+    <link rel="stylesheet" href="breadcrumb-style.css">
+</head>
+<body>
+    <!-- BARRA SUPERIORE FISSA -->
+    <nav class="top-nav">
+        <div class="hamburger" id="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <a href="index.html" class="site-logo">
+            <span class="site-logo-icon">📚</span>
+            <span class="site-logo-text">I Miei Appunti</span>
+        </a>
+
+        <a href="index.html" class="home-link">
+            🏠 <span>Home</span>
+        </a>
+    </nav>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto principale -->
+    <main class="content appunti-page">
+
+
+        <div class="page-header-with-search">
+            <h1> SAS Programming</h1>
+            <input type="text" id="searchInput" placeholder="🔍 Cerca negli appunti..." onkeyup="searchNotes()">
+        </div>
+
+  
+        <!-- Lista Appunti -->
+        <div class="appunti-grid">
+            
+            <!-- Appunto 1: Array -->
+            <div class="appunto-card" data-category="datastep">
+                <div class="card-header">
+                    <span class="category-badge macro">datastep</span>
+                    <span class="date">27 Mar 2017</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="appunti/sas-array.html">Array - Definizione </a>
+                    </h3>
+                    <p class="card-description">
+                        Come creare Array
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">array</span>
+                        <span class="tag">variabili</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="appunti/sas-array.html" class="btn-primary">Leggi →</a>
+                </div>
+            </div>
+
+            <!-- Appunto 2: PROC IMPORT -->
+            <div class="appunto-card" data-category="datastep">
+                <div class="card-header">
+                    <span class="category-badge import">datastep</span>
+                    <span class="date">09 Dic 2024</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="appunti/sas-numero-cifre-logaritmi.html">Numero di digit per rappresentare un numero</a>
+                    </h3>
+                    <p class="card-description">
+                        Guida per calcolare il Numero di digit per rappresentare un numero
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">import</span>
+                        <span class="tag">excel</span>
+                        <span class="tag">csv</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="appunti/sas-numero-cifre-logaritmi.html" class="btn-primary">Leggi →</a>
+                </div>
+            </div>
+
+            <!-- Appunto 3: Data Step -->
+            <div class="appunto-card" data-category="datastep">
+                <div class="card-header">
+                    <span class="category-badge datastep">Data Step</span>
+                    <span class="date">08 Dic 2024</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="appunti/sas-data-step-base.html">Data Step - Manipolazione Dati Base</a>
+                    </h3>
+                    <p class="card-description">
+                        Operazioni fondamentali nel Data Step: creazione dataset, filtri, nuove variabili e funzioni.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">data step</span>
+                        <span class="tag">manipolazione</span>
+                        <span class="tag">base</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="appunti/sas-data-step-base.html" class="btn-primary">Leggi →</a>
+                </div>
+            </div>
+
+            <!-- Appunto 4: PROC SQL -->
+            <div class="appunto-card" data-category="proc">
+                <div class="card-header">
+                    <span class="category-badge proc">Procedure</span>
+                    <span class="date">07 Dic 2024</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="appunti/sas-proc-sql.html">PROC SQL - Query e Join</a>
+                    </h3>
+                    <p class="card-description">
+                        Utilizzo di PROC SQL per query avanzate, join tra tabelle e aggregazioni complesse.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">sql</span>
+                        <span class="tag">join</span>
+                        <span class="tag">query</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="appunti/sas-proc-sql.html" class="btn-primary">Leggi →</a>
+                </div>
+            </div>
+
+            <!-- Appunto 5: PROC MEANS -->
+            <div class="appunto-card" data-category="proc">
+                <div class="card-header">
+                    <span class="category-badge proc">Procedure</span>
+                    <span class="date">06 Dic 2024</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="appunti/sas-proc-means.html">PROC MEANS - Statistiche Descrittive</a>
+                    </h3>
+                    <p class="card-description">
+                        Calcolo di medie, somme, deviazioni standard e altre statistiche con PROC MEANS.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">statistiche</span>
+                        <span class="tag">analisi</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="appunti/sas-proc-means.html" class="btn-primary">Leggi →</a>
+                </div>
+            </div>
+
+            <!-- Appunto 6: PROC FREQ -->
+            <div class="appunto-card" data-category="proc">
+                <div class="card-header">
+                    <span class="category-badge proc">Procedure</span>
+                    <span class="date">05 Dic 2024</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="appunti/sas-proc-freq.html">PROC FREQ - Tabelle di Frequenza</a>
+                    </h3>
+                    <p class="card-description">
+                        Creazione di tabelle di frequenza, crosstab e test statistici con PROC FREQ.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">frequenze</span>
+                        <span class="tag">crosstab</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="appunti/sas-proc-freq.html" class="btn-primary">Leggi →</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pulsante per aggiungere nuovo appunto -->
+        <div class="add-note-section">
+            <h3>Vuoi aggiungere un nuovo appunto?</h3>
+            <p>Scarica il template e personalizzalo con i tuoi appunti</p>
+            <a href="appunti/template-appunto.html" class="btn-secondary" download>📥 Scarica Template</a>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script src="appunti-search.js"></script>
+</body>
+</html>

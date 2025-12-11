@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trovare Numero Cifre con Logaritmi | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+</head>
+<body>
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Trovare il Numero di Cifre usando i Logaritmi</h1>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2> Descrizione</h2>
+            <p>
+                Questo appunto mostra come calcolare in modo efficiente il numero di cifre (k) 
+                di un numero intero positivo (n) utilizzando i logaritmi in base 10.
+            </p>
+            <p>
+                La soluzione matematica è elegante ed evita la conversione del numero in stringa, 
+                risultando molto più efficiente per calcoli su grandi dataset.
+            </p>
+        </div>
+
+        <!-- Il Problema -->
+        <div class="note-section">
+            <h2> Il Problema</h2>
+            <p>
+                Dato un numero intero positivo <strong>n</strong>, come possiamo trovare 
+                efficientemente <strong>k</strong> (il numero di cifre) come funzione di <strong>n</strong>?
+            </p>
+            
+            <div class="note-box info">
+                <strong>💡 Esempio:</strong> Il numero n = 1234 ha k = 4 cifre. 
+                Come trovare k a partire da n?
+            </div>
+        </div>
+
+
+        <!-- Esempio Canonico -->
+        <div class="note-section">
+            <h2>🎯 Esempio Canonico</h2>
+            <p>
+                Consideriamo <strong>n = 1234</strong>, che ha <strong>k = 4</strong> cifre. 
+                Come possiamo trovare k a partire da n?
+            </p>
+
+            <h3>Codice SAS:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">DATA</span> _null_;
+    n = <span class="sas-number">1234</span>;      <span class="sas-comment">/* positive integer */</span>
+    k = <span class="sas-function">ceil</span>(<span class="sas-function">log10</span>(n+<span class="sas-number">1</span>)); 
+    <span class="sas-keyword">PUT</span> <span class="sas-string">"The integer "</span> n= <span class="sas-string">"has "</span> k= <span class="sas-string">"digits."</span>;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+
+            <h3>Output:</h3>
+            <div class="code-block">
+                <pre><code>The integer n=1234 has k=4 digits.</code></pre>
+            </div>
+        </div>
+
+      
+        <!-- Funzioni Utilizzate -->
+        <div class="note-section">
+            <h2>Funzioni SAS Utilizzate</h2>
+            
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">LOG10(x)</div>
+                    <div class="option-description">
+                        Calcola il logaritmo in base 10 di x. 
+                        Esempio: LOG10(100) = 2
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">CEIL(x)</div>
+                    <div class="option-description">
+                        Arrotonda x all'intero superiore. 
+                        Esempio: CEIL(3.2) = 4, CEIL(3.9) = 4
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../appunti-search.js"></script>
+</body>
+</html>

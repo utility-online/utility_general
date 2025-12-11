@@ -38,102 +38,144 @@ document.addEventListener('click', (e) => {
 
 // ==== SLIDER IMMAGINI ====
 
-// Funzione per mostrare una slide specifica
-function showSlide(n) {
-    // Rimuovi classe active da tutte le slides e dots
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
+// Verifica che esistano slide (per pagine senza slider)
+if (slides.length > 0) {
     
-    // Gestisci i limiti
-    if (n >= slides.length) {
-        currentSlide = 0;
-    } else if (n < 0) {
-        currentSlide = slides.length - 1;
-    } else {
-        currentSlide = n;
+    // Funzione per mostrare una slide specifica
+    function showSlide(n) {
+        // Rimuovi classe active da tutte le slides e dots
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        // Gestisci i limiti
+        if (n >= slides.length) {
+            currentSlide = 0;
+        } else if (n < 0) {
+            currentSlide = slides.length - 1;
+        } else {
+            currentSlide = n;
+        }
+        
+        // Aggiungi classe active alla slide e dot correnti
+        slides[currentSlide].classList.add('active');
+        if (dots[currentSlide]) {
+            dots[currentSlide].classList.add('active');
+        }
     }
-    
-    // Aggiungi classe active alla slide e dot correnti
-    slides[currentSlide].classList.add('active');
-    dots[currentSlide].classList.add('active');
+
+    // Funzione per andare alla slide successiva
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    // Funzione per andare alla slide precedente
+    function prevSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    // Event listeners per i pulsanti (se esistono)
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
+        });
+    }
+
+    // Event listeners per i dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            showSlide(index);
+            resetInterval();
+        });
+    });
+
+    // Avvio automatico dello slider
+    function startSlideShow() {
+        slideInterval = setInterval(nextSlide, 4000); // Cambia ogni 4 secondi
+    }
+
+    // Reset dell'intervallo quando l'utente interagisce
+    function resetInterval() {
+        clearInterval(slideInterval);
+        startSlideShow();
+    }
+
+    // Pausa lo slider quando il mouse è sopra
+    const sliderContainer = document.querySelector('.slider-container');
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+
+        // Riprendi lo slider quando il mouse esce
+        sliderContainer.addEventListener('mouseleave', () => {
+            startSlideShow();
+        });
+
+        // Supporto per swipe su mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        sliderContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        sliderContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // Swipe a sinistra
+                nextSlide();
+                resetInterval();
+            }
+            if (touchEndX > touchStartX + 50) {
+                // Swipe a destra
+                prevSlide();
+                resetInterval();
+            }
+        }
+    }
+
+    // Supporto per navigazione con tastiera
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+            resetInterval();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            resetInterval();
+        }
+    });
+
+    // Avvia lo slider all'avvio
+    startSlideShow();
 }
 
-// Funzione per andare alla slide successiva
-function nextSlide() {
-    showSlide(currentSlide + 1);
-}
+// ==== SMOOTH SCROLL ====
 
-// Funzione per andare alla slide precedente
-function prevSlide() {
-    showSlide(currentSlide - 1);
-}
-
-
-// Event listeners per i dots
-dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        showSlide(index);
-        resetInterval();
+// Scroll fluido quando si clicca sui link del menu
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
 });
-
-// Avvio automatico dello slider
-function startSlideShow() {
-    slideInterval = setInterval(nextSlide, 4000); // Cambia ogni 4 secondi
-}
-
-// Reset dell'intervallo quando l'utente interagisce
-function resetInterval() {
-    clearInterval(slideInterval);
-    startSlideShow();
-}
-
-// Pausa lo slider quando il mouse è sopra
-document.querySelector('.slider-container').addEventListener('mouseenter', () => {
-    clearInterval(slideInterval);
-});
-
-// Riprendi lo slider quando il mouse esce
-document.querySelector('.slider-container').addEventListener('mouseleave', () => {
-    startSlideShow();
-});
-
-// Supporto per swipe su mobile
-let touchStartX = 0;
-let touchEndX = 0;
-
-document.querySelector('.slider-container').addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-});
-
-document.querySelector('.slider-container').addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-});
-
-function handleSwipe() {
-    if (touchEndX < touchStartX - 50) {
-        // Swipe a sinistra
-        nextSlide();
-        resetInterval();
-    }
-    if (touchEndX > touchStartX + 50) {
-        // Swipe a destra
-        prevSlide();
-        resetInterval();
-    }
-}
-
-// Supporto per navigazione con tastiera
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-        prevSlide();
-        resetInterval();
-    } else if (e.key === 'ArrowRight') {
-        nextSlide();
-        resetInterval();
-    }
-});
-
-// Avvia lo slider all'avvio
-startSlideShow();
