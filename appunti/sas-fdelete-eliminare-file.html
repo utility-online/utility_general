@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminare File con FDELETE | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+</head>
+<body>
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Eliminare File con FDELETE</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>Data Step</strong></span>
+                <span>📅 Aggiornato: <strong>10 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>5 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">file system</span>
+                <span class="tag">fdelete</span>
+                <span class="tag">filename</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questo appunto mostra come <strong>eliminare un file dal file system</strong> 
+                utilizzando le funzioni SAS <strong>FILENAME</strong>, <strong>FEXIST</strong> 
+                e <strong>FDELETE</strong>.
+            </p>
+            <p>
+                Il codice verifica prima se il file esiste e lo elimina solo se presente, 
+                evitando errori.
+            </p>
+        </div>
+
+        <!-- Codice Principale -->
+        <div class="note-section">
+            <h2> Codice</h2>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">DATA</span> _null_;
+    fname = <span class="sas-string">'tempfile'</span>;
+    rc = <span class="sas-function">FILENAME</span>(<span class="sas-string">'fname'</span>, <span class="sas-string">"&indicatori./stg/mysas.sas"</span>);
+    
+    <span class="sas-keyword">IF</span> rc = <span class="sas-number">0</span> <span class="sas-keyword">AND</span> <span class="sas-function">FEXIST</span>(fname) <span class="sas-keyword">THEN</span>
+        rc = <span class="sas-function">FDELETE</span>(fname);
+        
+    rc = <span class="sas-function">FILENAME</span>(fname);
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+        </div>
+
+    
+        <!-- Alternative -->
+        <div class="note-section">
+            <h2>Metodo Alternativo</h2>
+
+            <h3>Usando X Statement (solo Windows/Linux):</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Windows */</span>
+<span class="sas-keyword">X</span> <span class="sas-string">"del &indicatori.\stg\mysas.sas"</span>;
+
+<span class="sas-comment">/* Linux/Unix */</span>
+<span class="sas-keyword">X</span> <span class="sas-string">"rm &indicatori./stg/mysas.sas"</span>;</code></pre>
+            </div>
+
+            <div class="note-box warning">
+                <strong>⚠️ Limitazione:</strong> Questo metodo è dipendente dal sistema operativo 
+                e richiede che l'opzione XCMD in sas sia abilitata.
+            </div>
+        </div>
+
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../appunti-search.js"></script>
+</body>
+</html>
