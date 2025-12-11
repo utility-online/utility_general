@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolare Ultimo Giorno del Mese | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+</head>
+<body>
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Calcolare l'Ultimo Giorno del Mese</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>Data Step</strong></span>
+                <span>📅 Aggiornato: <strong>10 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>4 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">date</span>
+                <span class="tag">call symput</span>
+                <span class="tag">macro variabili</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <p>
+                Questo appunto mostra come calcolare l'<strong>ultimo giorno di qualsiasi mese</strong>, 
+                incluso febbraio con la gestione degli anni bisestili.
+            </p>
+            <p>
+                Il codice utilizza <strong>CALL SYMPUT</strong> per creare una macro variabile 
+                contenente l'ultimo giorno del mese specificato.
+            </p>
+        </div>
+
+        <!-- Codice Principale -->
+        <div class="note-section">
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">IF</span> &MESEFINE <span class="sas-keyword">IN</span>(<span class="sas-number">1</span>,<span class="sas-number">3</span>,<span class="sas-number">5</span>,<span class="sas-number">7</span>,<span class="sas-number">8</span>,<span class="sas-number">10</span>,<span class="sas-number">12</span>) <span class="sas-keyword">THEN</span> 
+    <span class="sas-keyword">CALL SYMPUT</span>(<span class="sas-string">"GGFINE"</span>, <span class="sas-number">31</span>);
+
+<span class="sas-keyword">IF</span> &MESEFINE <span class="sas-keyword">IN</span>(<span class="sas-number">4</span>,<span class="sas-number">6</span>,<span class="sas-number">9</span>,<span class="sas-number">11</span>) <span class="sas-keyword">THEN</span> 
+    <span class="sas-keyword">CALL SYMPUT</span>(<span class="sas-string">"GGFINE"</span>, <span class="sas-number">30</span>);
+
+<span class="sas-keyword">IF</span> &MESEFINE <span class="sas-keyword">IN</span>(<span class="sas-number">2</span>) <span class="sas-keyword">THEN</span> 
+    <span class="sas-keyword">CALL SYMPUT</span>(<span class="sas-string">"GGFINE"</span>, <span class="sas-number">28</span> + (<span class="sas-function">MOD</span>(&ANNOFINE, <span class="sas-number">4</span>) = <span class="sas-number">0</span>));</code></pre>
+            </div>
+        </div>
+
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../appunti-search.js"></script>
+</body>
+</html>

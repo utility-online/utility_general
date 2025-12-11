@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macro Check File - Contare File in una Cartella | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+</head>
+<body>
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Macro Check File - Contare File in una Cartella</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>Macro</strong></span>
+                <span>📅 Aggiornato: <strong>10 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>8 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">macro</span>
+                <span class="tag">file system</span>
+                <span class="tag">automazione</span>
+                <span class="tag">pipe</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questa macro SAS permette di <strong>contare automaticamente i file</strong> presenti 
+                in una cartella che corrispondono a un determinato pattern (naming convention).
+            </p>
+        </div>
+
+
+        <!-- Codice Completo -->
+        <div class="note-section">
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">%MACRO</span> check_file;
+    <span class="sas-comment">/* Inserire i valori corretti per le macro variabili: */</span>
+    <span class="sas-comment">/* FOLDER: cartella che contiene i csv (chiudere con '/' o '\') */</span>
+    <span class="sas-comment">/* FILE_NM: regola della naming convention da cercare */</span>
+    
+    <span class="sas-keyword">%LET</span> FOLDER = <span class="sas-string">C:\Users\Vito\Desktop\anomalie\20161212\</span>;
+    <span class="sas-keyword">%LET</span> FILE_NM = <span class="sas-string">Anomalie_DW*.csv</span>;
+    
+    <span class="sas-comment">/* Conta i file presenti nel FOLDER secondo naming convention FILE_NM */</span>
+    <span class="sas-keyword">%LET</span> COUNT_FILE = <span class="sas-number">0</span>;
+    
+    <span class="sas-keyword">FILENAME</span> DIRLIST <span class="sas-keyword">PIPE</span> <span class="sas-string">"dir ""&FOLDER.&FILE_NM."" "</span>;
+    
+    <span class="sas-keyword">DATA</span> dirlist(<span class="sas-keyword">KEEP</span> = file_name);
+        <span class="sas-keyword">INFILE</span> dirlist <span class="sas-keyword">LRECL</span> = <span class="sas-number">200</span> <span class="sas-keyword">TRUNCOVER</span>;
+        <span class="sas-keyword">INPUT</span> line $<span class="sas-number">200</span>.;
+        
+        <span class="sas-keyword">IF</span> <span class="sas-function">INPUT</span>(<span class="sas-function">SUBSTR</span>(line, <span class="sas-number">1</span>, <span class="sas-number">10</span>), ?? mmddyy10.) = . <span class="sas-keyword">THEN</span> 
+            <span class="sas-keyword">DELETE</span>;
+            
+        <span class="sas-keyword">LENGTH</span> file_name $ <span class="sas-number">100</span>;
+        file_name = <span class="sas-string">"&FOLDER."</span> || <span class="sas-function">SCAN</span>(line, -<span class="sas-number">1</span>, <span class="sas-string">" "</span>);
+    <span class="sas-keyword">RUN</span>;
+    
+    <span class="sas-keyword">PROC SQL</span> <span class="sas-keyword">NOPRINT</span>;
+        <span class="sas-keyword">SELECT</span> <span class="sas-function">COUNT</span>(*)
+        <span class="sas-keyword">INTO</span> :COUNT_FILE
+        <span class="sas-keyword">FROM</span> dirlist;
+    <span class="sas-keyword">RUN</span>;
+    
+    <span class="sas-keyword">%IF</span> &COUNT_FILE. = <span class="sas-number">9</span> <span class="sas-keyword">%THEN</span>
+    <span class="sas-keyword">%DO</span>;
+        <span class="sas-comment">/* ... inserire la chiamata alla macro del programma */</span>
+    <span class="sas-keyword">%END</span>;
+<span class="sas-keyword">%MEND</span> check_file;
+
+<span class="sas-comment">/* Esegui la macro */</span>
+<span class="sas-keyword">%check_file</span>;</code></pre>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../appunti-search.js"></script>
+</body>
+</html>
