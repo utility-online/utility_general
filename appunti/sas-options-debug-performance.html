@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opzioni SAS - Debug e Performance | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+</head>
+<body>
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Opzioni SAS - Debug e Performance</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>Data Step</strong></span>
+                <span>📅 Aggiornato: <strong>10 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>6 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">options</span>
+                <span class="tag">debug</span>
+                <span class="tag">performance</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <p>
+                Le <strong>opzioni SAS</strong> permettono di controllare il comportamento del sistema 
+                durante l'esecuzione dei programmi. Questo appunto raccoglie le principali opzioni per 
+                il <strong>debug delle macro</strong> e il <strong>monitoraggio delle performance</strong>.
+            </p>
+        </div>
+
+        <!-- Opzioni Debug Macro -->
+        <div class="note-section">
+            <h2> Opzioni Debug Macro</h2>
+
+            <h3>Attivare Debug:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">OPTIONS</span> <span class="sas-keyword">MPRINT</span> <span class="sas-keyword">SYMBOLGEN</span> <span class="sas-keyword">MLOGIC</span>;</code></pre>
+            </div>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">MPRINT</div>
+                    <div class="option-description">
+                        <strong>Macro Print</strong><br>
+                        Stampa nel log il codice SAS generato dalle macro dopo la risoluzione.<br>
+                        Mostra esattamente quale codice viene eseguito.
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">SYMBOLGEN</div>
+                    <div class="option-description">
+                        <strong>Symbol Generation</strong><br>
+                        Mostra nel log il valore di ogni macro variabile quando viene risolta.<br>
+                        Utile per vedere cosa contengono le variabili <code>&var</code>.
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">MLOGIC</div>
+                    <div class="option-description">
+                        <strong>Macro Logic</strong><br>
+                        Traccia l'esecuzione della logica delle macro (%IF, %DO, ecc.).<br>
+                        Mostra quali rami del codice vengono eseguiti.
+                    </div>
+                </div>
+            </div>
+
+            <h3>Disattivare Debug:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">OPTIONS</span> <span class="sas-keyword">NOMPRINT</span> <span class="sas-keyword">NOSYMBOLGEN</span>;</code></pre>
+            </div>
+
+            <p>
+                Prefisso <strong>NO</strong> disattiva l'opzione (es: NOMPRINT, NOSYMBOLGEN, NOMLOGIC).
+            </p>
+        </div>
+
+        <!-- Opzione Compilazione Macro -->
+        <div class="note-section">
+            <h2> Opzione Compilazione Macro</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">OPTIONS</span> <span class="sas-keyword">MCOMPILENOTE</span>=<span class="sas-keyword">ALL</span>;</code></pre>
+            </div>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">MCOMPILENOTE=ALL</div>
+                    <div class="option-description">
+                        <strong>Macro Compile Note</strong><br>
+                        Scrive note nel log sulla compilazione delle macro.<br>
+                        Mostra quando una macro viene compilata e memorizzata.<br>
+                        <strong>Valori:</strong> ALL, NONE, NOAUTOCALL
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opzione Livello Messaggi -->
+        <div class="note-section">
+            <h2> Opzione Livello Messaggi</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">OPTIONS</span> <span class="sas-keyword">MSGLEVEL</span>=<span class="sas-keyword">I</span>;</code></pre>
+            </div>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">MSGLEVEL=I</div>
+                    <div class="option-description">
+                        <strong>Message Level - Informative</strong><br>
+                        Controlla il livello di dettaglio dei messaggi nel log.<br>
+                        <strong>I</strong> (Informative) = Mostra messaggi informativi aggiuntivi<br>
+                        <strong>N</strong> (Normal) = Solo messaggi standard<br>
+                        Utile per ottenere più informazioni su merge, indicizzazione, ordinamento.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opzioni Performance -->
+        <div class="note-section">
+            <h2> Opzioni Monitoraggio Performance</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">OPTIONS</span> <span class="sas-keyword">STIMER</span> <span class="sas-keyword">MEMRPT</span> <span class="sas-keyword">FULLSTIMER</span> <span class="sas-keyword">STATS</span>;</code></pre>
+            </div>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">STIMER</div>
+                    <div class="option-description">
+                        <strong>Statistics Timer</strong><br>
+                        Scrive statistiche di timing nel log per ogni step.<br>
+                        Mostra tempo CPU e tempo reale di esecuzione.
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">MEMRPT</div>
+                    <div class="option-description">
+                        <strong>Memory Report</strong><br>
+                        Riporta l'utilizzo di memoria per ogni step.<br>
+                        Mostra memoria allocata e memoria effettivamente utilizzata.
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">FULLSTIMER</div>
+                    <div class="option-description">
+                        <strong>Full Statistics Timer</strong><br>
+                        Versione estesa di STIMER con statistiche più dettagliate.<br>
+                        Include I/O, page faults e altre metriche di sistema.
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">STATS</div>
+                    <div class="option-description">
+                        <strong>Statistics</strong><br>
+                        Scrive statistiche aggiuntive su operazioni di I/O.<br>
+                        Mostra numero di record letti/scritti e buffer utilizzati.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opzione Riuso Spazio -->
+        <div class="note-section">
+            <h2> Opzione Gestione Memoria</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">OPTIONS</span> <span class="sas-keyword">REUSE</span>=<span class="sas-keyword">YES</span>;</code></pre>
+            </div>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">REUSE=YES</div>
+                    <div class="option-description">
+                        <strong>Reuse Space</strong><br>
+                        Permette il riutilizzo dello spazio liberato nei dataset.<br>
+                        Quando record vengono eliminati, lo spazio può essere riutilizzato per nuovi record.<br>
+                        <strong>YES</strong> = Riutilizza spazio (più efficiente)<br>
+                        <strong>NO</strong> = Non riutilizza (default, più veloce in scrittura sequenziale)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Riepilogo Tutte le Opzioni -->
+        <div class="note-section">
+            <h2> Riepilogo Opzioni</h2>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Opzione</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Categoria</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Descrizione Breve</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>MPRINT</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Debug Macro</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Stampa codice generato dalle macro</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>SYMBOLGEN</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Debug Macro</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Mostra valore macro variabili</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>MLOGIC</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Debug Macro</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Traccia logica macro (%IF, %DO)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>MCOMPILENOTE</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Compilazione</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Note compilazione macro</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>MSGLEVEL</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Messaggi</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Livello dettaglio messaggi log</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>STIMER</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Performance</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Statistiche timing base</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>MEMRPT</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Performance</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Report utilizzo memoria</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>FULLSTIMER</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Performance</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Statistiche timing estese</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>STATS</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Performance</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Statistiche I/O</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>REUSE</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Riutilizzo spazio dataset</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../appunti-search.js"></script>
+</body>
+</html>

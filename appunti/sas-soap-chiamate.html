@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiamate SOAP con PROC HTTP | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+</head>
+<body>
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Chiamate SOAP con PROC HTTP</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>Import/Export</strong></span>
+                <span>📅 Aggiornato: <strong>10 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>8 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">soap</span>
+                <span class="tag">web services</span>
+                <span class="tag">proc http</span>
+                <span class="tag">xml</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2> Descrizione</h2>
+            <p>
+                Questo appunto mostra come effettuare <strong>chiamate SOAP</strong> (Simple Object Access Protocol) 
+                a web services utilizzando <strong>PROC HTTP</strong> in SAS.
+            </p>
+            <p>
+                SOAP è un protocollo basato su XML per lo scambio di messaggi tra applicazioni. 
+                Il codice costruisce una richiesta SOAP completa con autenticazione, la invia al 
+                web service e legge la risposta.
+            </p>
+        </div>
+
+        <!-- Codice Completo -->
+        <div class="note-section">
+            <h2> Codice Completo</h2>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Crea un file temporaneo per la richiesta SOAP */</span>
+<span class="sas-keyword">FILENAME</span> soap <span class="sas-keyword">TEMP</span>;
+
+<span class="sas-keyword">DATA</span> _null_;
+    <span class="sas-keyword">FILE</span> soap;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;soapenv:Envelope xmlns:ind="http://tempuri.org/ind_imblr" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;soapenv:Header&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;wsse:Security soapenv:mustUnderstand="1"'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"'</span>; 
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;wsse:UsernameToken wsu:Id="UsernameToken-89734837984"&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;wsse:Username&gt;my_user@saspw&lt;/wsse:Username&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;wsse:Password'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'my_password&lt;/wsse:Password&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;wsse:Nonce'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'sByAS3FR/3dkM6E8Y6D43g==&lt;/wsse:Nonce&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;wsu:Created&gt;2024-01-22T16:59:23.680Z&lt;/wsu:Created&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;/wsse:UsernameToken&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;/wsse:Security&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;/soapenv:Header&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;soapenv:Body&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;ind:ind_imblr&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;ind:parameters&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;ind:par_1&gt;120000&lt;/ind:par_1&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;ind:par_2&gt;0&lt;/ind:par_2&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;ind:par_3&gt;0&lt;/ind:par_3&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;/ind:parameters&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;/ind:ind_imblr&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;/soapenv:Body&gt;'</span>;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;/soapenv:Envelope&gt;'</span>;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-comment">/* Crea un file temporaneo per la risposta SOAP */</span>
+<span class="sas-keyword">FILENAME</span> response <span class="sas-keyword">TEMP</span>;
+
+<span class="sas-comment">/* Esegue la chiamata HTTP POST */</span>
+<span class="sas-keyword">PROC HTTP</span>
+    <span class="sas-keyword">URL</span>=<span class="sas-string">"https://produzioneclo.gbi.bcc.it:443/SASBIWS/services/ind_imblr?wsdl"</span>
+    <span class="sas-keyword">METHOD</span>=<span class="sas-string">"POST"</span>
+    <span class="sas-keyword">IN</span>=soap
+    <span class="sas-keyword">OUT</span>=response;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-comment">/* Legge la risposta SOAP */</span>
+<span class="sas-keyword">DATA</span> soap_response;
+    <span class="sas-keyword">INFILE</span> response <span class="sas-keyword">LENGTH</span>=len;
+    <span class="sas-keyword">INPUT</span> response $<span class="sas-keyword">VARYING</span><span class="sas-number">1024</span>. len;
+    <span class="sas-keyword">PUT</span> response;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+        </div>
+
+        <!-- Come Funziona -->
+        <div class="note-section">
+            <h2>⚙️ Come Funziona (Passo per Passo)</h2>
+
+            <h3>Passo 1: Creazione File Temporaneo per Richiesta</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                </div>
+                <pre><code><span class="sas-keyword">FILENAME</span> soap <span class="sas-keyword">TEMP</span>;</code></pre>
+            </div>
+            <p>
+                Crea un <strong>file temporaneo</strong> chiamato <code>soap</code> che conterrà 
+                il messaggio XML della richiesta SOAP.
+            </p>
+
+            <h3>Passo 2: Costruzione Messaggio SOAP</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                </div>
+                <pre><code><span class="sas-keyword">DATA</span> _null_;
+    <span class="sas-keyword">FILE</span> soap;
+    <span class="sas-keyword">PUT</span> <span class="sas-string">'&lt;soapenv:Envelope ...&gt;'</span>;
+    <span class="sas-comment">/* ... */</span>
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+            <p>
+                Scrive nel file temporaneo il <strong>messaggio SOAP in formato XML</strong>, 
+                riga per riga usando il comando PUT.
+            </p>
+
+            <h3>Passo 3: Creazione File per Risposta</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                </div>
+                <pre><code><span class="sas-keyword">FILENAME</span> response <span class="sas-keyword">TEMP</span>;</code></pre>
+            </div>
+            <p>
+                Crea un altro file temporaneo per memorizzare la <strong>risposta</strong> del web service.
+            </p>
+
+            <h3>Passo 4: Esecuzione Chiamata HTTP</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                </div>
+                <pre><code><span class="sas-keyword">PROC HTTP</span>
+    <span class="sas-keyword">URL</span>=<span class="sas-string">"https://..."</span>
+    <span class="sas-keyword">METHOD</span>=<span class="sas-string">"POST"</span>
+    <span class="sas-keyword">IN</span>=soap
+    <span class="sas-keyword">OUT</span>=response;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+            <p>
+                Invia la richiesta SOAP al web service tramite <strong>HTTP POST</strong> e 
+                salva la risposta.
+            </p>
+
+            <h3>Passo 5: Lettura Risposta</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                </div>
+                <pre><code><span class="sas-keyword">DATA</span> soap_response;
+    <span class="sas-keyword">INFILE</span> response;
+    <span class="sas-keyword">INPUT</span> response $<span class="sas-keyword">VARYING</span><span class="sas-number">1024</span>.;
+    <span class="sas-keyword">PUT</span> response;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+            <p>
+                Legge la risposta dal file temporaneo e la stampa nel log SAS.
+            </p>
+        </div>
+
+
+
+    <script src="../script.js"></script>
+    <script src="../appunti-search.js"></script>
+</body>
+</html>
