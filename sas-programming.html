@@ -8,25 +8,36 @@
     <link rel="stylesheet" href="appunti-style.css">
     <link rel="stylesheet" href="navigation-style.css">
     <link rel="stylesheet" href="breadcrumb-style.css">
+    <link rel="stylesheet" href="dark-mode.css">
+    
 </head>
 <body>
+
+    
     <!-- BARRA SUPERIORE FISSA -->
     <nav class="top-nav">
+        
         <div class="hamburger" id="hamburger">
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
         </div>
+        
 
-        <a href="index.html" class="site-logo">
-            <span class="site-logo-icon">📚</span>
-            <span class="site-logo-text">I Miei Appunti</span>
-        </a>
 
-        <a href="index.html" class="home-link">
-            🏠 <span>Home</span>
-        </a>
-    </nav>
+        <!-- Gruppo elementi a destra -->
+        <div class="nav-right-group">
+            <a href="index.html" class="home-link">
+                🏠 <span>Home</span>
+            </a>
+
+            <button class="theme-toggle-nav" id="themeToggle" onclick="toggleTheme()" title="Camiga tema">
+                🌙
+            </button>
+        </div>
+    </nav>    
+                <!-- PULSANTE CAMBIO TEMA -->
+
 
     <!-- Menu Laterale -->
     <nav class="sidebar" id="sidebar">
@@ -44,7 +55,7 @@
 
 
         <div class="page-header-with-search">
-            <h1> SAS Programming</h1>
+            <h1> SAS Programming </h1>
             <input type="text" id="searchInput" placeholder="🔍 Cerca negli appunti..." onkeyup="searchNotes()">
         </div>
 
@@ -250,5 +261,6 @@
 
     <script src="script.js"></script>
     <script src="appunti-search.js"></script>
+    <script src="theme-toggle.js"></script>
 </body>
 </html>

@@ -1,0 +1,463 @@
+/* ===== DARK MODE THEME ===== */
+
+/* Quando body ha la classe 'dark-mode', applica questi stili */
+
+body.dark-mode {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* Contenuto principale */
+body.dark-mode .content {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* Header pagina */
+body.dark-mode .page-header {
+    background: #242424;
+    color: #e0e0e0;
+}
+
+body.dark-mode .page-header h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .subtitle {
+    color: #b0b0b0;
+}
+
+/* Barra di navigazione superiore */
+body.dark-mode .top-nav {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+}
+
+body.dark-mode .site-logo {
+    color: #ffffff;
+}
+
+body.dark-mode .home-link {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .home-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Menu laterale */
+body.dark-mode .sidebar {
+    background: #242424;
+}
+
+body.dark-mode .sidebar .menu a {
+    color: #e0e0e0;
+}
+
+body.dark-mode .sidebar .menu a:hover {
+    background: #333333;
+}
+
+body.dark-mode .close-btn {
+    color: #e0e0e0;
+}
+
+/* Hamburger menu */
+body.dark-mode .hamburger .line {
+    background: #ffffff;
+}
+
+/* Breadcrumb */
+body.dark-mode .breadcrumb {
+    background: #242424;
+}
+
+body.dark-mode .breadcrumb a {
+    color: #667eea;
+}
+
+body.dark-mode .breadcrumb-current {
+    color: #b0b0b0;
+}
+
+/* Card sezioni homepage */
+body.dark-mode .section-card {
+    background: #242424;
+    border: 1px solid #333333;
+}
+
+body.dark-mode .section-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+body.dark-mode .section-card h2 {
+    color: #ffffff;
+}
+
+body.dark-mode .section-card p {
+    color: #b0b0b0;
+}
+
+/* Barra di ricerca */
+body.dark-mode .search-bar-left input,
+body.dark-mode .search-bar input {
+    background: #242424;
+    color: #e0e0e0;
+    border-color: #404040;
+}
+
+body.dark-mode .search-bar-left input:focus,
+body.dark-mode .search-bar input:focus {
+    border-color: #667eea;
+    background: #2a2a2a;
+}
+
+body.dark-mode .search-bar-left input::placeholder,
+body.dark-mode .search-bar input::placeholder {
+    color: #808080;
+}
+
+/* Filtri categoria */
+body.dark-mode .filter-btn {
+    background: #242424;
+    color: #e0e0e0;
+    border: 1px solid #404040;
+}
+
+body.dark-mode .filter-btn:hover {
+    background: #333333;
+}
+
+body.dark-mode .filter-btn.active {
+    background: #667eea;
+    color: #ffffff;
+    border-color: #667eea;
+}
+
+/* Card appunti */
+body.dark-mode .appunto-card {
+    background: #242424;
+    border-color: #333333;
+}
+
+body.dark-mode .appunto-card:hover {
+    background: #2a2a2a;
+    border-left-color: #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+body.dark-mode .card-title a {
+    color: #ffffff;
+}
+
+body.dark-mode .card-title a:hover {
+    color: #667eea;
+}
+
+body.dark-mode .card-description {
+    color: #b0b0b0;
+}
+
+body.dark-mode .date {
+    color: #808080;
+}
+
+body.dark-mode .tag {
+    background: #333333;
+    color: #b0b0b0;
+}
+
+/* Badge categoria */
+body.dark-mode .category-badge {
+    opacity: 0.9;
+}
+
+/* Sezioni appunti */
+body.dark-mode .note-section {
+    background: #242424;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .note-section h2 {
+    color: #ffffff;
+    border-bottom-color: #404040;
+}
+
+body.dark-mode .note-section h3 {
+    color: #e0e0e0;
+}
+
+body.dark-mode .note-section p,
+body.dark-mode .note-section li {
+    color: #b0b0b0;
+}
+
+/* Metadata appunti */
+body.dark-mode .note-meta {
+    color: #b0b0b0;
+}
+
+body.dark-mode .note-meta strong {
+    color: #e0e0e0;
+}
+
+/* Back link */
+body.dark-mode .back-link {
+    color: #667eea;
+}
+
+body.dark-mode .back-link:hover {
+    color: #8299ff;
+}
+
+/* Blocchi codice */
+body.dark-mode .code-block {
+    background: #1a1a1a;
+    border: 1px solid #333333;
+}
+
+body.dark-mode .code-header {
+    border-bottom-color: #333333;
+}
+
+body.dark-mode .code-language {
+    color: #b0b0b0;
+}
+
+/* Pulsante copia */
+body.dark-mode .copy-btn {
+    background: #667eea;
+}
+
+body.dark-mode .copy-btn:hover {
+    background: #5568d3;
+}
+
+/* Note box */
+body.dark-mode .note-box {
+    background: #242424;
+    border-left-width: 4px;
+}
+
+body.dark-mode .note-box.info {
+    background: rgba(33, 150, 243, 0.1);
+    border-left-color: #2196f3;
+}
+
+body.dark-mode .note-box.success {
+    background: rgba(76, 175, 80, 0.1);
+    border-left-color: #4caf50;
+}
+
+body.dark-mode .note-box.warning {
+    background: rgba(255, 152, 0, 0.1);
+    border-left-color: #ff9800;
+}
+
+body.dark-mode .note-box.danger {
+    background: rgba(244, 67, 54, 0.1);
+    border-left-color: #f44336;
+}
+
+/* Tabelle */
+body.dark-mode table {
+    background: #242424;
+}
+
+body.dark-mode table thead tr {
+    background: #2a2a2a !important;
+}
+
+body.dark-mode table th,
+body.dark-mode table td {
+    border-color: #404040 !important;
+    color: #e0e0e0;
+}
+
+body.dark-mode table tbody tr:hover {
+    background: #2a2a2a;
+}
+
+/* Liste opzioni */
+body.dark-mode .options-list {
+    background: #242424;
+}
+
+body.dark-mode .option-item {
+    background: #242424;
+    border-color: #404040;
+}
+
+body.dark-mode .option-name {
+    color: #667eea;
+}
+
+body.dark-mode .option-description {
+    color: #b0b0b0;
+}
+
+/* Pulsanti */
+body.dark-mode .btn-primary {
+    background: #667eea;
+}
+
+body.dark-mode .btn-primary:hover {
+    background: #5568d3;
+}
+
+body.dark-mode .btn-secondary {
+    background: #333333;
+    color: #e0e0e0;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background: #404040;
+}
+
+/* Statistiche */
+body.dark-mode .stats {
+    color: #b0b0b0;
+}
+
+body.dark-mode .stat-item strong {
+    color: #ffffff;
+}
+
+/* Slider (se presente) */
+body.dark-mode .slider-container {
+    background: #242424;
+}
+
+body.dark-mode .slider-dots .dot {
+    background: #404040;
+}
+
+body.dark-mode .slider-dots .dot.active {
+    background: #667eea;
+}
+
+/* Footer (se presente) */
+body.dark-mode footer {
+    background: #242424;
+    color: #b0b0b0;
+    border-top: 1px solid #333333;
+}
+
+/* Scrollbar personalizzata */
+body.dark-mode::-webkit-scrollbar {
+    width: 12px;
+}
+
+body.dark-mode::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb {
+    background: #404040;
+    border-radius: 6px;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb:hover {
+    background: #505050;
+}
+
+/* Toggle tema */
+.theme-toggle {
+    position: fixed;
+    top: 15px;
+    right: 80px;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+body.dark-mode .theme-toggle {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: 15px;
+        right: 60px;
+        padding: 6px 10px;
+        font-size: 18px;
+    }
+}
+
+
+/* ===== PULSANTE DARK MODE NELLA TOP-NAV ===== */
+/* Pulsante integrato nella barra di navigazione */
+
+.theme-toggle-nav {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    margin-left: 15px;  /* Spazio dalla Home */
+    margin-right: 20px;  /* Spazio dal bordo destro */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.theme-toggle-nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+body.dark-mode .theme-toggle-nav {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .theme-toggle-nav:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive - mobile */
+@media (max-width: 768px) {
+    .theme-toggle-nav {
+        padding: 6px 10px;
+        font-size: 18px;
+        margin-left: 10px;
+        margin-right: 15px;
+    }
+}
+
+
+.nav-right-group {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-left: auto;
+}
+
+.nav-right-group .home-link {
+    margin-left: 0;
+}
+
+.nav-right-group .theme-toggle-nav {
+    margin-left: 15px;
+    margin-right: 20px;
+}
