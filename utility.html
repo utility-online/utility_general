@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility & Tools - I Miei Appunti</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="appunti-style.css">
+    <link rel="stylesheet" href="navigation-style.css">
+    <link rel="stylesheet" href="breadcrumb-style.css">
+    <link rel="stylesheet" href="dark-mode.css">
+</head>
+<body>
+    <!-- BARRA SUPERIORE FISSA -->
+    <nav class="top-nav">
+        <div class="hamburger" id="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <a href="index.html" class="site-logo">
+            <span class="site-logo-text">I Miei Appunti</span>
+        </a>
+
+        <!-- Gruppo elementi a destra -->
+        <div class="nav-right-group">
+            <a href="index.html" class="home-link">
+                🏠 <span>Home</span>
+            </a>
+
+            <button class="theme-toggle-nav" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+                🌙
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto principale -->
+    <main class="content appunti-page">
+        <!-- BREADCRUMB -->
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Home</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">Utility & Tools</span>
+        </div>
+
+        <!-- HEADER CON RICERCA -->
+        <div class="page-header-with-search">
+            <h1>🛠️ Utility & Tools</h1>
+            <input type="text" id="searchInput" placeholder="🔍 Cerca tool..." onkeyup="searchNotes()">
+        </div>
+
+        <!-- Lista Tools -->
+        <div class="appunti-grid">
+            
+            <!-- Tool 1: CSV Viewer -->
+            <div class="appunto-card" data-category="webapp">
+                <div class="card-header">
+                    <span class="category-badge webapp" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">Web App</span>
+                    <span class="date">12 Dic 2024</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="utility/csv-viewer.html">CSV Viewer</a>
+                    </h3>
+                    <p class="card-description">
+                        Visualizza file CSV molto grandi direttamente nel browser. Interfaccia user-friendly per esplorare dati strutturati.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">csv</span>
+                        <span class="tag">viewer</span>
+                        <span class="tag">browser</span>
+                        <span class="tag">gratis</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="utility/csv-viewer.html" class="btn-primary">Scarica →</a>
+                </div>
+            </div>
+
+            <!-- Aggiungi qui altri tools in futuro -->
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="appunti-search.js"></script>
+    <script src="theme-toggle.js"></script>
+</body>
+</html>
