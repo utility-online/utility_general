@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contare File per Data | Linux Shell</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../linux.html" class="back-link">← Torna a Linux & Shell</a>
+
+        <div class="note-header">
+            <h1>Contare File per Data</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>Bash</strong></span>
+                <span>📅 Aggiornato: <strong>12 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>5 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">ls</span>
+                <span class="tag">awk</span>
+                <span class="tag">sort</span>
+                <span class="tag">pipe</span>
+            </div>
+        </div>
+
+        <!-- Comando Completo -->
+        <div class="note-section">
+            <h2>💻 Comando Completo</h2>
+            <p>
+                Questo comando one-liner conta quanti file sono presenti per ogni mese/anno in una directory.
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>ls -lt --time-style="+%Y-%m" --color=never | awk '{months[$6]++} END {for (month in months) print month, months[month]}' | sort</code></pre>
+            </div>
+        </div>
+
+        <!-- Cosa Fa -->
+        <div class="note-section">
+            <h2>🎯 Cosa Fa</h2>
+            <p>
+                Il comando analizza tutti i file nella directory corrente e produce un <strong>report statistico</strong> 
+                che mostra quanti file sono stati modificati in ogni mese.
+            </p>
+
+            <h3>Output di Esempio:</h3>
+            <div class="code-block">
+                <pre><code>2023-11 15
+2023-12 23
+2024-01 31
+2024-02 18
+2024-12 7</code></pre>
+            </div>
+
+            <p><strong>Interpretazione:</strong></p>
+            <ul>
+                <li>Nel novembre 2023 ci sono 15 file</li>
+                <li>Nel dicembre 2023 ci sono 23 file</li>
+                <li>Nel gennaio 2024 ci sono 31 file</li>
+                <li>E così via...</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
