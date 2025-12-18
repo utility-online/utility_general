@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trovare Link Simbolici | Linux Shell</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../linux.html" class="back-link">← Torna a Linux & Shell</a>
+
+        <div class="note-header">
+            <h1>Trovare Link Simbolici con find</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>File Management</strong></span>
+                <span>📅 Aggiornato: <strong>12 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>4 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">find</span>
+                <span class="tag">symlink</span>
+                <span class="tag">link simbolici</span>
+            </div>
+        </div>
+
+        <!-- Comando Completo -->
+        <div class="note-section">
+            <h2>💻 Comando Base</h2>
+            <p>
+                Questo comando trova e lista tutti i <strong>link simbolici</strong> nella directory corrente 
+                e nelle sottodirectory.
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>find . -type l -ls</code></pre>
+            </div>
+        </div>
+
+        <!-- Cosa Fa -->
+        <div class="note-section">
+            <h2>🎯 Cosa Fa</h2>
+            <p>
+                Il comando cerca ricorsivamente tutti i <strong>link simbolici</strong> (symlink) a partire 
+                dalla directory corrente (<code>.</code>) e ne mostra i dettagli con formato esteso.
+            </p>
+
+            <h3>Output di Esempio:</h3>
+            <div class="code-block">
+                <pre><code>  1234567      0 lrwxrwxrwx   1 user  group      15 Dec 12 10:30 ./link1 -> /path/to/target1
+  2345678      0 lrwxrwxrwx   1 user  group      23 Dec 10 14:20 ./dir/link2 -> /another/target
+  3456789      0 lrwxrwxrwx   1 user  group      10 Nov 15 09:15 ./broken -> missing_file</code></pre>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
