@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Tabelle di una Libreria | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Lista Tabelle di una Libreria</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>PROC SQL</strong></span>
+                <span>📅 Aggiornato: <strong>12 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>6 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">proc sql</span>
+                <span class="tag">dictionary</span>
+                <span class="tag">metadata</span>
+                <span class="tag">tabelle</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questo appunto mostra come ottenere la <strong>lista di tutte le tabelle</strong> presenti 
+                in una libreria SAS utilizzando le <strong>viste DICTIONARY</strong> tramite PROC SQL.
+            </p>
+            <p>
+                È particolarmente utile per esplorare librerie, verificare l'esistenza di tabelle, 
+                o creare report sui metadati.
+            </p>
+        </div>
+
+        <!-- Codice Base -->
+        <div class="note-section">
+            <h2>💻 Codice Base</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">PROC SQL</span>;
+   <span class="sas-keyword">CREATE TABLE</span> lista_tabelle <span class="sas-keyword">AS</span> 
+   <span class="sas-keyword">SELECT</span> memname, memtype 
+   <span class="sas-keyword">FROM</span> dictionary.tables 
+   <span class="sas-keyword">WHERE</span> libname = <span class="sas-string">'NOME_LIBRERIA'</span>; <span class="sas-comment">/* Il nome deve essere in MAIUSCOLO */</span>
+<span class="sas-keyword">QUIT</span>;</code></pre>
+            </div>
+
+        </div>
+
+        <!-- Output Esempio -->
+        <div class="note-section">
+            <h2>📊 Output Esempio</h2>
+
+            <h3>Esempio 1: Libreria SASHELP</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                </div>
+                <pre><code><span class="sas-keyword">PROC SQL</span>;
+   <span class="sas-keyword">SELECT</span> memname, memtype, nobs, nvar
+   <span class="sas-keyword">FROM</span> dictionary.tables 
+   <span class="sas-keyword">WHERE</span> libname = <span class="sas-string">'SASHELP'</span>
+   <span class="sas-keyword">ORDER BY</span> memname;
+<span class="sas-keyword">QUIT</span>;</code></pre>
+            </div>
+
+            <p><strong>Output:</strong></p>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">MEMNAME</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">MEMTYPE</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">NOBS</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">NVAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">CARS</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">DATA</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">428</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">15</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">CLASS</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">DATA</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">19</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SHOES</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">DATA</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">395</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">7</td>
+                    </tr>
+                </tbody>
+            </table>
+           
+        <!-- SASHELP Alternative -->
+        <div class="note-section">
+            <h2>🔄 Alternativa: Viste SASHELP</h2>
+            <p>
+                Le viste DICTIONARY sono disponibili solo in PROC SQL. 
+                Per usarle in DATA step, SAS fornisce viste <strong>SASHELP</strong> equivalenti:
+            </p>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">DICTIONARY</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">SASHELP Equivalente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">DICTIONARY.TABLES</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SASHELP.VTABLE</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">DICTIONARY.COLUMNS</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SASHELP.VCOLUMN</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">DICTIONARY.MEMBERS</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SASHELP.VMEMBER</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">DICTIONARY.LIBNAMES</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SASHELP.VLIBNAM</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Esempio con SASHELP.VTABLE:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* In DATA step */</span>
+<span class="sas-keyword">DATA</span> lista_tabelle;
+    <span class="sas-keyword">SET</span> sashelp.vtable;
+    <span class="sas-keyword">WHERE</span> libname = <span class="sas-string">'WORK'</span>;
+    <span class="sas-keyword">KEEP</span> libname memname nobs nvar;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
