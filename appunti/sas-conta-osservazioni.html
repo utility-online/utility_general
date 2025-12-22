@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contare Osservazioni in una Tabella | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Contare Osservazioni in una Tabella</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>PROC SQL / Data Step</strong></span>
+                <span>📅 Aggiornato: <strong>12 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>8 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">proc sql</span>
+                <span class="tag">count</span>
+                <span class="tag">sysfunc</span>
+                <span class="tag">attrn</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questo appunto mostra <strong>due metodi principali</strong> per contare il numero di 
+                osservazioni (righe) in una tabella SAS:
+            </p>
+            <ul>
+                <li><strong>PROC SQL con COUNT()</strong> - Conta basandosi su condizioni, include WHERE clause</li>
+                <li><strong>SYSFUNC con ATTRN()</strong> - Legge metadati del dataset, molto veloce ma senza filtri</li>
+            </ul>
+        </div>
+
+        <!-- Metodo 1: PROC SQL -->
+        <div class="note-section">
+            <h2>📊 Metodo 1: PROC SQL con COUNT()</h2>
+            <p>
+                Usa <strong>PROC SQL</strong> per contare le righe, con possibilità di applicare filtri WHERE.
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">PROC SQL</span> <span class="sas-keyword">NOPRINT</span>;
+    <span class="sas-keyword">SELECT</span> <span class="sas-function">COUNT</span>(cod_sinistro) <span class="sas-keyword">INTO</span> :num_obs_triage_manuale
+    <span class="sas-keyword">FROM</span> alerts.alert_triage_manuale
+    <span class="sas-keyword">WHERE</span> <span class="sas-function">STRIP</span>(cod_sinistro) = <span class="sas-string">'009920015029682'</span>;
+<span class="sas-keyword">QUIT</span>;</code></pre>
+            </div>
+
+
+            <h3>Esempio Utilizzo:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">PROC SQL</span> <span class="sas-keyword">NOPRINT</span>;
+    <span class="sas-keyword">SELECT</span> <span class="sas-function">COUNT</span>(*) <span class="sas-keyword">INTO</span> :num_obs
+    <span class="sas-keyword">FROM</span> alerts.alert_triage_manuale
+    <span class="sas-keyword">WHERE</span> <span class="sas-function">STRIP</span>(cod_sinistro) = <span class="sas-string">'009920015029682'</span>;
+<span class="sas-keyword">QUIT</span>;
+
+<span class="sas-keyword">%PUT</span> Numero di osservazioni trovate: &num_obs;
+
+<span class="sas-comment">/* Usa la macro variabile in condizioni */</span>
+<span class="sas-keyword">%IF</span> &num_obs > <span class="sas-number">0</span> <span class="sas-keyword">%THEN</span> <span class="sas-keyword">%DO</span>;
+    <span class="sas-keyword">%PUT</span> Trovate &num_obs osservazioni!;
+<span class="sas-keyword">%END</span>;
+<span class="sas-keyword">%ELSE</span> <span class="sas-keyword">%DO</span>;
+    <span class="sas-keyword">%PUT</span> WARNING: Nessuna osservazione trovata;
+<span class="sas-keyword">%END</span>;</code></pre>
+            </div>
+
+        <!-- Metodo 2: SYSFUNC -->
+        <div class="">
+            <h2>⚡ Metodo 2: SYSFUNC con ATTRN()</h2>
+            <p>
+                Usa <strong>funzioni di sistema</strong> per leggere i metadati del dataset. 
+                <strong>Molto veloce</strong> perché non legge i dati, solo l'header.
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">%LET</span> dsid   = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">OPEN</span>(parametri2));
+<span class="sas-keyword">%LET</span> anyobs = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">ATTRN</span>(&dsid,ANY));
+<span class="sas-keyword">%LET</span> dsid   = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">CLOSE</span>(&dsid));</code></pre>
+            </div>
+
+
+            <h3>Attributi ATTRN Disponibili:</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Attributo</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Descrizione</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Valori</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>ANY</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Il dataset ha osservazioni?</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">1 = sì, 0 = no</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>NOBS</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Numero di osservazioni</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Numero esatto (se disponibile)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>NVARS</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Numero di variabili</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Conteggio colonne</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>NLOBS</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Numero logico di osservazioni</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Include osservazioni eliminate</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>CRDTE</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Data creazione</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Valore numerico SAS date</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>MODTE</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Data ultima modifica</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Valore numerico SAS date</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Esempi Attributi:</h3>
+
+            <h4>1. Conta ESATTA osservazioni con NOBS:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">%LET</span> dsid  = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">OPEN</span>(sashelp.class));
+<span class="sas-keyword">%LET</span> nobs  = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">ATTRN</span>(&dsid,NOBS));
+<span class="sas-keyword">%LET</span> nvars = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">ATTRN</span>(&dsid,NVARS));
+<span class="sas-keyword">%LET</span> dsid  = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">CLOSE</span>(&dsid));
+
+<span class="sas-keyword">%PUT</span> Dataset ha &nobs osservazioni e &nvars variabili;</code></pre>
+            </div>
+
+            <h4>2. Verifica se dataset è vuoto:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">%LET</span> dsid   = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">OPEN</span>(work.mytable));
+<span class="sas-keyword">%LET</span> anyobs = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">ATTRN</span>(&dsid,ANY));
+<span class="sas-keyword">%LET</span> dsid   = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">CLOSE</span>(&dsid));
+
+<span class="sas-keyword">%IF</span> &anyobs = <span class="sas-number">0</span> <span class="sas-keyword">%THEN</span> <span class="sas-keyword">%DO</span>;
+    <span class="sas-keyword">%PUT</span> WARNING: Dataset è vuoto!;
+<span class="sas-keyword">%END</span>;</code></pre>
+            </div>
+
+
+        <!-- Varianti e Casi d'Uso -->
+        <div class="">
+            <h2>🔧 Varianti e Casi d'Uso</h2>
+
+            <h3>1️⃣ Macro Completa di Verifica</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-keyword">%MACRO</span> check_dataset(ds);
+    <span class="sas-keyword">%LOCAL</span> dsid anyobs nobs nvars;
+    
+    <span class="sas-comment">/* Apri dataset */</span>
+    <span class="sas-keyword">%LET</span> dsid = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">OPEN</span>(&ds));
+    
+    <span class="sas-comment">/* Verifica apertura */</span>
+    <span class="sas-keyword">%IF</span> &dsid = <span class="sas-number">0</span> <span class="sas-keyword">%THEN</span> <span class="sas-keyword">%DO</span>;
+        <span class="sas-keyword">%PUT</span> ERROR: Impossibile aprire dataset &ds;
+        <span class="sas-keyword">%RETURN</span>;
+    <span class="sas-keyword">%END</span>;
+    
+    <span class="sas-comment">/* Leggi attributi */</span>
+    <span class="sas-keyword">%LET</span> anyobs = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">ATTRN</span>(&dsid,ANY));
+    <span class="sas-keyword">%LET</span> nobs   = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">ATTRN</span>(&dsid,NOBS));
+    <span class="sas-keyword">%LET</span> nvars  = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">ATTRN</span>(&dsid,NVARS));
+    
+    <span class="sas-comment">/* Chiudi dataset */</span>
+    <span class="sas-keyword">%LET</span> dsid = <span class="sas-function">%SYSFUNC</span>(<span class="sas-function">CLOSE</span>(&dsid));
+    
+    <span class="sas-comment">/* Report */</span>
+    <span class="sas-keyword">%PUT</span> ========================================;
+    <span class="sas-keyword">%PUT</span> Dataset: &ds;
+    <span class="sas-keyword">%PUT</span> Ha osservazioni: &anyobs (1=sì, 0=no);
+    <span class="sas-keyword">%PUT</span> Numero osservazioni: &nobs;
+    <span class="sas-keyword">%PUT</span> Numero variabili: &nvars;
+    <span class="sas-keyword">%PUT</span> ========================================;
+<span class="sas-keyword">%MEND</span>;
+
+<span class="sas-comment">/* Esempio uso */</span>
+<span class="sas-keyword">%check_dataset</span>(sashelp.class);</code></pre>
+            </div>
+
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
