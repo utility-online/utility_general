@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizzare Solo le Cartelle | Linux Shell</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../linux.html" class="back-link">← Torna a Linux & Shell</a>
+
+        <div class="note-header">
+            <h1>Visualizzare Solo le Cartelle</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>File Management</strong></span>
+                <span>📅 Aggiornato: <strong>12 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>6 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">ls</span>
+                <span class="tag">directory</span>
+                <span class="tag">grep</span>
+                <span class="tag">cartelle</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questo appunto mostra <strong>tre metodi principali</strong> per visualizzare 
+                <strong>solo le cartelle</strong> (directory) escludendo i file normali:
+            </p>
+            <ul>
+                <li><strong>ls -d */</strong> - Metodo rapido con wildcard</li>
+                <li><strong>ls -l | grep "^d"</strong> - Filtraggio con grep sui permessi</li>
+                <li><strong>find</strong> - Ricerca ricorsiva avanzata</li>
+            </ul>
+        </div>
+
+        <!-- Metodo 1: ls -d */ -->
+        <div class="note-section">
+            <h2>📁 Metodo 1: ls -d */ (Più Semplice)</h2>
+            <p>
+                Il metodo <strong>più veloce e diretto</strong> per listare solo le cartelle.
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>ls -d */</code></pre>
+            </div>
+
+            <h3>Output Esempio:</h3>
+            <div class="code-block">
+                <pre><code>backup/
+documenti/
+downloads/
+progetti/
+scripts/</code></pre>
+            </div>
+
+            <h3>Variante: Path Specifico</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>ls -d /percorso/cartella/*/</code></pre>
+            </div>
+            <p>
+                Lista solo le cartelle dentro <code>/percorso/cartella/</code> senza entrare ricorsivamente.
+            </p>
+
+            <h3>Esempio Pratico:</h3>
+            <div class="code-block">
+                <pre><code># Lista cartelle in /var/log/
+ls -d /var/log/*/
+
+# Output esempio:
+/var/log/apache2/
+/var/log/apt/
+/var/log/journal/
+/var/log/nginx/</code></pre>
+            </div>
+
+
+        <!-- Metodo 2: ls -l | grep -->
+        <div class="">
+            <h2>🔍 Metodo 2: ls -l | grep "^d" (Con Dettagli)</h2>
+            <p>
+                Usa <strong>grep</strong> per filtrare solo le righe che iniziano con "d" (directory).
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>ls -l | grep "^d"</code></pre>
+            </div>
+
+            <h3>Output Esempio:</h3>
+            <div class="code-block">
+                <pre><code>drwxr-xr-x 5 user group 4096 Dec 12 10:30 backup
+drwxr-xr-x 3 user group 4096 Dec 10 15:20 documenti
+drwxr-xr-x 8 user group 4096 Dec  5 09:15 downloads
+drwxr-xr-x 4 user group 4096 Nov 20 14:45 progetti
+drwxr-xr-x 2 user group 4096 Nov 15 11:30 scripts</code></pre>
+            </div>
+
+        <!-- Metodo 3: Con Cartelle Nascoste -->
+        <div class="">
+            <h2>Includere Cartelle Nascoste</h2>
+            <p>
+                Le cartelle nascoste (che iniziano con <code>.</code>) richiedono l'opzione <code>-a</code>.
+            </p>
+
+         
+            <h3>Metodo 1 con nascoste:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>ls -la | grep "^d"</code></pre>
+            </div>
+            <p><code>-a</code> include file e cartelle nascoste (iniziano con .)</p>
+
+            <h3>Alternativa pulita (esclude . e ..):</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>ls -lA | grep "^d"</code></pre>
+            </div>
+            <p><code>-A</code> mostra nascoste ma ESCLUDE <code>.</code> e <code>..</code></p>
+        </div>
+
+        <!-- Metodo 4: find -->
+        <div class="">
+            <h2>🔎 Metodo 3: find (Ricorsivo e Avanzato)</h2>
+            <p>
+                Per ricerche più complesse o ricorsive, usa <strong>find</strong>.
+            </p>
+
+            <h3>Solo directory corrente:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>find . -maxdepth 1 -type d</code></pre>
+            </div>
+
+            <h3>Ricorsivo (tutte le sottocartelle):</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>find . -type d</code></pre>
+            </div>
+
+            <h3>Escludere directory corrente (.):</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>find . -maxdepth 1 -type d ! -name "."</code></pre>
+            </div>
+
+            <h3>Con dettagli (come ls -l):</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>find . -maxdepth 1 -type d -ls</code></pre>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
