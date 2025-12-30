@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoraggio Memoria Server LASR | SAS Appunti</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna agli appunti SAS</a>
+
+        <div class="note-header">
+            <h1>Monitoraggio Memoria Server LASR</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>LASR / Performance</strong></span>
+                <span>📅 Aggiornato: <strong>12 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>10 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">lasr</span>
+                <span class="tag">memoria</span>
+                <span class="tag">performance</span>
+                <span class="tag">monitoring</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questo appunto mostra come <strong>monitorare l'uso della memoria</strong> del 
+                <strong>SAS LASR Analytic Server</strong>.
+            </p>
+            <p>
+                Il codice si connette al server LASR e interroga le tabelle di sistema per ottenere 
+                informazioni dettagliate su:
+            </p>
+            <ul>
+                <li><strong>Memoria totale del server LASR</strong></li>
+                <li><strong>Memoria occupata da ogni tabella</strong></li>
+            </ul>
+        </div>
+
+
+        <!-- Codice Completo -->
+        <div class="note-section">
+            <h2>💻 Codice Completo</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* 1. Connessione al Server LASR */</span>
+<span class="sas-keyword">LIBNAME</span> LASRLIB SASIOLA  
+    TAG=VAPUBLIC  
+    PORT=&lt;LASR_PORT&gt; 
+    HOST=<span class="sas-string">"&lt;FQDN_OF_LASR_HEAD_NODE&gt;"</span>  
+    SIGNER=<span class="sas-string">"&lt;MIDDLE_TIER_URL&gt;/SASLASRAuthorization"</span>;
+
+<span class="sas-comment">/* 2. Definizione colonne per dimensioni memoria */</span>
+<span class="sas-keyword">%LET</span> sizecols = InMemorySize UncompressedSize 
+                CompressedSize TableAllocatedMemory
+                InMemoryMappedSize ChildSMPTableMemory
+                VirtualMemory ResidentMemory AllocatedMemory;
+
+<span class="sas-comment">/* 3. Definizione colonne per conteggi */</span>
+<span class="sas-keyword">%LET</span> countcols = NumberRecords UseCount RecordLength ComputedColLength;
+
+<span class="sas-comment">/* 4. Lettura tabelle di sistema */</span>
+<span class="sas-keyword">DATA</span> tablemem;
+    <span class="sas-keyword">SET</span> lasrlib._T_TABLEMEMORY;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-keyword">DATA</span> lasrmem;
+    <span class="sas-keyword">SET</span> lasrlib._T_LASRMEMORY;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-comment">/* 5. Report memoria server LASR */</span>
+<span class="sas-keyword">PROC PRINT</span> <span class="sas-keyword">DATA</span>=lasrmem;
+    <span class="sas-keyword">TITLE</span> <span class="sas-string">"LASR Server Memory Usage"</span>;
+    <span class="sas-keyword">FORMAT</span> &sizecols. sizekmg9.2;
+    <span class="sas-keyword">FORMAT</span> &countcols. 8.;
+    <span class="sas-keyword">SUM</span> _numeric_;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-comment">/* 6. Report memoria tabelle LASR */</span>
+<span class="sas-keyword">PROC PRINT</span> <span class="sas-keyword">DATA</span>=tablemem;
+    <span class="sas-keyword">TITLE</span> <span class="sas-string">"LASR Server Table Memory Usage"</span>;
+    <span class="sas-keyword">FORMAT</span> &sizecols. sizekmg9.2;
+    <span class="sas-keyword">FORMAT</span> &countcols. 8.;
+    <span class="sas-keyword">SUM</span> _numeric_;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-comment">/* Conversioni unità di misura */</span>
+<span class="sas-comment">/* 1 Byte = 0,00000095367431640625 Megabyte [MB] */</span>
+<span class="sas-comment">/* 1 Byte = 0,00000000093132257461548 Gigabyte [GB] */</span></code></pre>
+            </div>
+        </div>
+
+        <!-- Tabelle di Sistema -->
+        <div class="note-section">
+            <h2>📊 Tabelle di Sistema LASR</h2>
+
+            <h3>_T_LASRMEMORY - Memoria Server</h3>
+            <p>
+                Contiene statistiche aggregate sulla memoria del <strong>server LASR completo</strong>.
+            </p>
+
+            <h4>Colonne Principali:</h4>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Colonna</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Descrizione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>VirtualMemory</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria virtuale totale allocata dal processo LASR</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>ResidentMemory</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria fisica (RAM) effettivamente usata</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>AllocatedMemory</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria allocata per dati LASR</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>InMemorySize</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Dimensione dati in memoria (compressi)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>UncompressedSize</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Dimensione dati se NON compressi</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>CompressedSize</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Dimensione effettiva dopo compressione</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>_T_TABLEMEMORY - Memoria Tabelle</h3>
+            <p>
+                Contiene statistiche per <strong>ogni singola tabella</strong> caricata in LASR.
+            </p>
+
+            <h4>Colonne Principali:</h4>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Colonna</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Descrizione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>TableName</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Nome della tabella in LASR</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>NumberRecords</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Numero di righe (osservazioni)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>InMemorySize</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria occupata dalla tabella</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>TableAllocatedMemory</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria allocata per la tabella</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>UseCount</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Quante volte è stata usata/interrogata</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>RecordLength</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Lunghezza media record in byte</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>ComputedColLength</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria usata da colonne calcolate</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>InMemoryMappedSize</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria mappata (file-mapped)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>ChildSMPTableMemory</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Memoria usata da worker thread (SMP)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- Interpretazione Output -->
+        <div class="note-section">
+            <h2>📈 Interpretazione Output</h2>
+
+            <h3>Esempio Output _T_LASRMEMORY:</h3>
+            <div class="code-block">
+                <pre><code>LASR Server Memory Usage
+
+VirtualMemory    ResidentMemory   AllocatedMemory   InMemorySize   UncompressedSize
+    50.00 GB         32.00 GB         28.00 GB        15.00 GB         45.00 GB</code></pre>
+            </div>
+
+            <h3>Cosa Significano i Numeri:</h3>
+            <ul>
+                <li><strong>VirtualMemory (50 GB):</strong> Memoria virtuale totale riservata</li>
+                <li><strong>ResidentMemory (32 GB):</strong> RAM fisica effettivamente usata</li>
+                <li><strong>AllocatedMemory (28 GB):</strong> Memoria allocata per tabelle LASR</li>
+                <li><strong>InMemorySize (15 GB):</strong> Dati compressi in memoria</li>
+                <li><strong>UncompressedSize (45 GB):</strong> Dimensione originale dati</li>
+            </ul>
+
+            
+
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
