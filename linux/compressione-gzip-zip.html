@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compressione File: gzip e zip | Linux Shell</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../oracle.html">🔴 Oracle Database</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../linux.html" class="back-link">← Torna a Linux & Shell</a>
+
+        <div class="note-header">
+            <h1>Compressione File: gzip e zip</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>File Management</strong></span>
+                <span>📅 Aggiornato: <strong>31 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>10 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">gzip</span>
+                <span class="tag">zip</span>
+                <span class="tag">compressione</span>
+                <span class="tag">archivi</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questo appunto mostra come <strong>comprimere e decomprimere file</strong> su Linux 
+                usando i due comandi principali:
+            </p>
+            <ul>
+                <li><strong>gzip</strong> - Compressione GNU zip (standard Linux/Unix)</li>
+                <li><strong>zip</strong> - Compressione compatibile Windows/cross-platform</li>
+            </ul>
+            <p>
+                Entrambi riducono la dimensione dei file per risparmiare spazio disco e velocizzare trasferimenti.
+            </p>
+        </div>
+
+        <!-- gzip -->
+        <div class="note-section">
+            <h2>📦 gzip - Compressione GNU</h2>
+            <p>
+                <strong>gzip</strong> è lo standard di compressione su Linux/Unix. 
+                Crea file con estensione <code>.gz</code>.
+            </p>
+
+            <h3>Sintassi Base:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>gzip file.txt</code></pre>
+            </div>
+
+            <h3>Cosa Succede:</h3>
+            <ul>
+                <li>File originale <code>file.txt</code> viene <strong>sostituito</strong> da <code>file.txt.gz</code></li>
+                <li>Il file originale viene <strong>cancellato</strong></li>
+                <li>Estensione <code>.gz</code> viene aggiunta automaticamente</li>
+            </ul>
+
+            <h3>Opzioni Principali:</h3>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">-k (--keep)</div>
+                    <div class="option-description">
+                        <strong>Mantiene il file originale</strong><br>
+                        Non cancella il file dopo compressione<br>
+                        <code>gzip -k file.txt</code> → crea file.txt.gz e mantiene file.txt
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-d (--decompress)</div>
+                    <div class="option-description">
+                        <strong>Decomprime</strong><br>
+                        Equivalente a <code>gunzip</code><br>
+                        <code>gzip -d file.txt.gz</code> → ricrea file.txt
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-1 a -9</div>
+                    <div class="option-description">
+                        <strong>Livello di compressione</strong><br>
+                        <code>-1</code> = Veloce, compressione minima<br>
+                        <code>-6</code> = Default, bilanciato<br>
+                        <code>-9</code> = Lento, compressione massima<br>
+                        Esempio: <code>gzip -9 file.txt</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-r (--recursive)</div>
+                    <div class="option-description">
+                        <strong>Comprime ricorsivamente</strong><br>
+                        Comprime tutti i file in directory e sottodirectory<br>
+                        <code>gzip -r cartella/</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-v (--verbose)</div>
+                    <div class="option-description">
+                        <strong>Modalità verbose</strong><br>
+                        Mostra nome file e percentuale riduzione<br>
+                        <code>gzip -v file.txt</code><br>
+                        Output: <code>file.txt: 65.2% -- replaced with file.txt.gz</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-l (--list)</div>
+                    <div class="option-description">
+                        <strong>Info file compresso</strong><br>
+                        Mostra dimensioni, ratio, nome originale<br>
+                        <code>gzip -l file.txt.gz</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-c (--stdout)</div>
+                    <div class="option-description">
+                        <strong>Output su stdout</strong><br>
+                        Mantiene file originale, scrive compresso su stdout<br>
+                        <code>gzip -c file.txt > file.txt.gz</code>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Esempi Pratici gzip:</h3>
+
+            <h4>1. Compressione Base (sostituisce originale):</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>gzip documento.txt
+# Risultato: documento.txt.gz (documento.txt cancellato)</code></pre>
+            </div>
+
+            <h4>2. Compressione Mantenendo Originale:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>gzip -k documento.txt
+# Risultato: documento.txt.gz (documento.txt mantenuto)</code></pre>
+            </div>
+
+            <h4>3. Compressione Massima:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>gzip -9 documento.txt
+# Massima compressione (più lento)</code></pre>
+            </div>
+
+            <h4>4. Compressione Multipla con Info:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>gzip -kv *.txt
+# Output esempio:
+# file1.txt:  72.1% -- created file1.txt.gz
+# file2.txt:  65.8% -- created file2.txt.gz</code></pre>
+            </div>
+
+            <h4>5. Compressione Ricorsiva Directory:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>gzip -r logs/
+# Comprime TUTTI i file in logs/ e sottocartelle</code></pre>
+            </div>
+
+            <h4>6. Info su File Compresso:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>gzip -l documento.txt.gz
+# Output esempio:
+#         compressed        uncompressed  ratio uncompressed_name
+#              12345              123456  90.0% documento.txt</code></pre>
+            </div>
+        </div>
+
+        <!-- gunzip -->
+        <div class="note-section">
+            <h2>📂 gunzip - Decompressione</h2>
+            <p>
+                <strong>gunzip</strong> decomprime file <code>.gz</code>. 
+                È equivalente a <code>gzip -d</code>.
+            </p>
+
+            <h3>Sintassi:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>gunzip file.txt.gz
+
+# Equivalente a:
+gzip -d file.txt.gz</code></pre>
+            </div>
+
+            <h3>Cosa Succede:</h3>
+            <ul>
+                <li>File <code>file.txt.gz</code> viene <strong>decompresso</strong></li>
+                <li>Risultato: <code>file.txt</code> (originale ricreato)</li>
+                <li>File <code>.gz</code> viene <strong>cancellato</strong></li>
+            </ul>
+
+            <h3>Esempi Decompressione:</h3>
+
+            <h4>1. Decompressione Base:</h4>
+            <div class="code-block">
+                <pre><code>gunzip documento.txt.gz
+# Risultato: documento.txt</code></pre>
+            </div>
+
+            <h4>2. Decompressione Mantenendo .gz:</h4>
+            <div class="code-block">
+                <pre><code>gunzip -k documento.txt.gz
+# Risultato: documento.txt (documento.txt.gz mantenuto)</code></pre>
+            </div>
+
+            <h4>3. Decompressione Multipla:</h4>
+            <div class="code-block">
+                <pre><code>gunzip *.gz
+# Decomprime tutti i .gz nella directory</code></pre>
+            </div>
+
+            <h4>4. Visualizza Contenuto Senza Decomprimere:</h4>
+            <div class="code-block">
+                <pre><code># Opzione 1: zcat
+zcat documento.txt.gz
+
+# Opzione 2: gunzip -c
+gunzip -c documento.txt.gz
+
+# Opzione 3: gzip -dc
+gzip -dc documento.txt.gz</code></pre>
+            </div>
+
+            <h4>5. Cerca Dentro File Compressi:</h4>
+            <div class="code-block">
+                <pre><code># zgrep - grep su file .gz
+zgrep "errore" logfile.txt.gz
+
+# Equivalente a:
+gunzip -c logfile.txt.gz | grep "errore"</code></pre>
+            </div>
+        </div>
+
+        <!-- zip -->
+        <div class="note-section">
+            <h2>🗜️ zip - Compressione Cross-Platform</h2>
+            <p>
+                <strong>zip</strong> crea archivi compressi compatibili con Windows/Mac/Linux. 
+                Estensione <code>.zip</code>.
+            </p>
+
+            <h3>Sintassi Base zip:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>zip archivio.zip file1.txt file2.txt file3.txt</code></pre>
+            </div>
+
+            <h3>Opzioni Principali zip:</h3>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">-r (--recurse-paths)</div>
+                    <div class="option-description">
+                        <strong>Ricorsivo</strong><br>
+                        Include directory e sottodirectory<br>
+                        <code>zip -r backup.zip cartella/</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-0 a -9</div>
+                    <div class="option-description">
+                        <strong>Livello compressione</strong><br>
+                        <code>-0</code> = Store (nessuna compressione, solo archivia)<br>
+                        <code>-6</code> = Default<br>
+                        <code>-9</code> = Massima compressione
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-u (--update)</div>
+                    <div class="option-description">
+                        <strong>Aggiorna archivio</strong><br>
+                        Aggiunge solo file nuovi o modificati<br>
+                        <code>zip -u archivio.zip nuovofile.txt</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-d (--delete)</div>
+                    <div class="option-description">
+                        <strong>Rimuove file da archivio</strong><br>
+                        <code>zip -d archivio.zip file.txt</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-e (--encrypt)</div>
+                    <div class="option-description">
+                        <strong>Cripta con password</strong><br>
+                        Richiede password interattiva<br>
+                        <code>zip -e segreto.zip documento.txt</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-q (--quiet)</div>
+                    <div class="option-description">
+                        <strong>Modalità silenziosa</strong><br>
+                        Non mostra output<br>
+                        <code>zip -q archivio.zip *.txt</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-x (--exclude)</div>
+                    <div class="option-description">
+                        <strong>Esclude file/pattern</strong><br>
+                        <code>zip -r backup.zip . -x "*.log" "temp/*"</code>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Esempi Pratici zip:</h3>
+
+            <h4>1. Comprime Singolo File:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>zip documento.zip documento.txt
+# Crea documento.zip, mantiene documento.txt</code></pre>
+            </div>
+
+            <h4>2. Comprime Multipli File:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>zip documenti.zip file1.txt file2.txt file3.txt
+
+# Oppure con wildcard:
+zip documenti.zip *.txt</code></pre>
+            </div>
+
+            <h4>3. Comprime Directory Completa:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>zip -r backup.zip progetto/
+# Include TUTTA la directory progetto/ ricorsivamente</code></pre>
+            </div>
+
+            <h4>4. Compressione Massima:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>zip -9 -r archivio.zip cartella/
+# Massima compressione</code></pre>
+            </div>
+
+            <h4>5. Esclude File Specifici:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Esclude log e file temp
+zip -r backup.zip progetto/ -x "*.log" "*.tmp" "node_modules/*"</code></pre>
+            </div>
+
+
+            <h4>8. Lista Contenuto senza Decomprimere:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>unzip -l archivio.zip
+# Mostra lista file nell'archivio</code></pre>
+            </div>
+        </div>
+
+        <!-- unzip -->
+        <div class="note-section">
+            <h2>📂 unzip - Decompressione ZIP</h2>
+
+            <h3>Sintassi Base:</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>unzip archivio.zip</code></pre>
+            </div>
+
+            <h3>Opzioni Principali unzip:</h3>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">-l (--list)</div>
+                    <div class="option-description">
+                        <strong>Lista contenuto</strong><br>
+                        Non decomprime, solo mostra file<br>
+                        <code>unzip -l archivio.zip</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-d (--directory)</div>
+                    <div class="option-description">
+                        <strong>Directory destinazione</strong><br>
+                        Estrae in directory specifica<br>
+                        <code>unzip archivio.zip -d /tmp/estratti</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-o (--overwrite)</div>
+                    <div class="option-description">
+                        <strong>Sovrascrivi senza chiedere</strong><br>
+                        <code>unzip -o archivio.zip</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-n (--never-overwrite)</div>
+                    <div class="option-description">
+                        <strong>Non sovrascrivere mai</strong><br>
+                        Salta file esistenti<br>
+                        <code>unzip -n archivio.zip</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-q (--quiet)</div>
+                    <div class="option-description">
+                        <strong>Silenzioso</strong><br>
+                        No output<br>
+                        <code>unzip -q archivio.zip</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-j (--junk-paths)</div>
+                    <div class="option-description">
+                        <strong>Ignora path</strong><br>
+                        Estrae tutti i file nella directory corrente (flat)<br>
+                        <code>unzip -j archivio.zip</code>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Esempi Pratici unzip:</h3>
+
+            <h4>1. Decompressione Base:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>unzip archivio.zip
+# Estrae tutto nella directory corrente</code></pre>
+            </div>
+
+            <h4>2. Estrai in Directory Specifica:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>unzip backup.zip -d /home/user/ripristino/
+# Crea directory se non esiste</code></pre>
+            </div>
+
+            <h4>3. Lista Contenuto:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>unzip -l archivio.zip
+# Output:
+# Archive:  archivio.zip
+#   Length      Date    Time    Name
+# ---------  ---------- -----   ----
+#      1234  12-31-2024 10:30   file1.txt
+#      5678  12-31-2024 10:31   file2.txt</code></pre>
+            </div>
+
+            <h4>4. Estrai Solo File Specifico:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>unzip archivio.zip documento.txt
+# Estrae solo documento.txt</code></pre>
+            </div>
+
+            <h4>5. Estrai con Pattern:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Solo file .txt
+unzip archivio.zip "*.txt"
+
+# Solo file in una cartella
+unzip archivio.zip "docs/*"</code></pre>
+            </div>
+
+            <h4>6. Testa Integrità:</h4>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>unzip -t archivio.zip
+# Verifica integrità senza estrarre</code></pre>
+            </div>
+
+
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
