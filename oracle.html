@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oracle Database - I Miei Appunti</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="appunti-style.css">
+    <link rel="stylesheet" href="navigation-style.css">
+    <link rel="stylesheet" href="breadcrumb-style.css">
+    <link rel="stylesheet" href="dark-mode.css">
+</head>
+<body>
+    <!-- BARRA SUPERIORE FISSA -->
+    <nav class="top-nav">
+        <div class="hamburger" id="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <a href="index.html" class="site-logo">
+            <span class="site-logo-text">I Miei Appunti</span>
+        </a>
+
+        <!-- Gruppo elementi a destra -->
+        <div class="nav-right-group">
+            <a href="index.html" class="home-link">
+                🏠 <span>Home</span>
+            </a>
+
+            <button class="theme-toggle-nav" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+                🌙
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="oracle.html">🔴 Oracle Database</a></li>
+            <li><a href="utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="linux.html">🐧 Linux & Shell</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto principale -->
+    <main class="content appunti-page">
+        <!-- BREADCRUMB -->
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Home</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">Oracle Database</span>
+        </div>
+
+        <!-- HEADER CON RICERCA -->
+        <div class="page-header-with-search">
+            <h1>🔴 Oracle Database</h1>
+            <input type="text" id="searchInput" placeholder="🔍 Cerca query e comandi..." onkeyup="searchNotes()">
+        </div>
+
+        <!-- Lista Appunti Oracle -->
+        <div class="appunti-grid">
+            
+            <!-- Appunto: Aggiungere Partizioni Mensili -->
+            <div class="appunto-card" data-category="ddl">
+                <div class="card-header">
+                    <span class="category-badge ddl" style="background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);">DDL</span>
+                    <span class="date">12 Dic 2024</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="oracle/oracle-add-partitions.html">Aggiungere Partizioni Mensili</a>
+                    </h3>
+                    <p class="card-description">
+                        Come aggiungere partizioni mensili a tabella Oracle con ALTER TABLE ADD PARTITION per migliorare performance
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">alter table</span>
+                        <span class="tag">partition</span>
+                        <span class="tag">list</span>
+                        <span class="tag">performance</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="oracle/oracle-add-partitions.html" class="btn-primary">Leggi →</a>
+                </div>
+            </div>
+
+            <!-- Aggiungi qui i tuoi appunti Oracle -->
+            <!-- Copia questa struttura card per ogni nuovo appunto -->
+
+        </div>
+
+        <!-- Messaggio se nessun appunto ancora -->
+        <div class="empty-state" style="text-align: center; padding: 60px 20px; display: none;">
+            <h2 style="color: #888; font-size: 2em; margin-bottom: 20px;">📝</h2>
+            <h3 style="color: #888;">Nessun appunto Oracle ancora</h3>
+            <p style="color: #aaa;">Inizia ad aggiungere le tue query e note Oracle!</p>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script src="appunti-search.js"></script>
+    <script src="theme-toggle.js"></script>
+</body>
+</html>
