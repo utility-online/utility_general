@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminare Tutti i File Tranne Uno | Linux Shell</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../oracle.html">🔴 Oracle Database</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+            <li><a href="https://regexone.com" target="_blank" rel="noopener noreferrer">🔤 RegEx Tutorial ↗</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../linux.html" class="back-link">← Torna a Linux & Shell</a>
+
+        <div class="note-header">
+            <h1>Eliminare Tutti i File Tranne Uno</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>File Management</strong></span>
+                <span>📅 Aggiornato: <strong>31 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>10 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">find</span>
+                <span class="tag">delete</span>
+                <span class="tag">exclude</span>
+                <span class="tag">pulizia</span>
+            </div>
+        </div>
+
+        <!-- WARNING INIZIALE -->
+        <div class="note-box warning" style="background: #fff3cd; border-left: 4px solid #ff6b6b; padding: 20px; margin: 30px 0;">
+            <h3 style="color: #d63031; margin-top: 0;">⚠️ COMANDO PERICOLOSO - LEGGERE ATTENTAMENTE</h3>
+            <p style="font-size: 16px; line-height: 1.6;">
+                Questo comando <strong>ELIMINA PERMANENTEMENTE</strong> file senza possibilità di recupero!<br>
+                <strong>NON</strong> va nel cestino - i file sono persi per sempre.<br>
+                <strong>SEMPRE</strong> testare prima con <code>-print</code> invece di <code>-delete</code>!
+            </p>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questo appunto mostra come <strong>eliminare tutti i file in una directory tranne uno specifico</strong> 
+                usando il comando <code>find</code> con l'operatore di negazione <code>!</code>.
+            </p>
+            <p>
+                È particolarmente utile per:
+            </p>
+            <ul>
+                <li><strong>Pulizia directory di lavoro</strong> - Mantieni solo risultato finale</li>
+                <li><strong>Rimuovi file temporanei</strong> - Tranne configurazione</li>
+                <li><strong>Reset directory test</strong> - Mantieni solo template</li>
+                <li><strong>Gestione backup</strong> - Mantieni solo ultimo backup</li>
+            </ul>
+        </div>
+
+        <!-- Comando Base -->
+        <div class="note-section">
+            <h2>💻 Comando Base</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>find . -type f ! -name 'nome_del_file.txt' -delete</code></pre>
+            </div>
+
+            <h3>Cosa Fa:</h3>
+            <p>
+                <strong>Elimina TUTTI i file nella directory corrente e sottodirectory, 
+                TRANNE il file chiamato <code>nome_del_file.txt</code>.</strong>
+            </p>
+
+            <div class="note-box warning">
+                <strong>⚠️ PRIMA DI USARE -delete:</strong><br>
+                SEMPRE testare il comando con <code>-print</code> per vedere cosa verrebbe eliminato!<br>
+                <code>find . -type f ! -name 'nome_del_file.txt' -print</code>
+            </div>
+        </div>
+
+        <!-- Spiegazione Sintassi -->
+        <div class="note-section">
+            <h2>🔍 Spiegazione Sintassi</h2>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">find .</div>
+                    <div class="option-description">
+                        <strong>Cerca nella directory corrente</strong><br>
+                        <code>.</code> = directory corrente<br>
+                        Cerca ricorsivamente in tutte le sottodirectory<br>
+                        Puoi specificare path diverso: <code>find /path/to/dir</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-type f</div>
+                    <div class="option-description">
+                        <strong>Solo file regolari</strong><br>
+                        <code>f</code> = file (non directory, link, ecc.)<br>
+                        Evita di cancellare directory per errore<br>
+                        Altri tipi: <code>d</code> (directory), <code>l</code> (link simbolico)
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">!</div>
+                    <div class="option-description">
+                        <strong>Operatore di NEGAZIONE (NOT)</strong><br>
+                        Inverte la condizione successiva<br>
+                        <code>! -name 'file.txt'</code> = "NON chiamato file.txt"<br>
+                        ⚠️ Deve essere escapato o quotato in alcuni shell
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-name 'nome_del_file.txt'</div>
+                    <div class="option-description">
+                        <strong>Nome esatto del file</strong><br>
+                        Case-sensitive: <code>File.txt</code> ≠ <code>file.txt</code><br>
+                        Per case-insensitive usa <code>-iname</code><br>
+                        Supporta wildcard: <code>'*.txt'</code>, <code>'file?.log'</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">-delete</div>
+                    <div class="option-description">
+                        <strong>Elimina i file trovati</strong><br>
+                        ⚠️ <strong>PERMANENTE</strong> - non va nel cestino!<br>
+                        Nessuna conferma richiesta<br>
+                        Operazione NON reversibile<br>
+                        ✅ Sempre testare prima con <code>-print</code>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Lettura del Comando:</h3>
+            <p style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: monospace;">
+                "Trova nella directory corrente, solo file regolari, 
+                che NON si chiamano 'nome_del_file.txt', ed eliminali"
+            </p>
+        </div>
+
+        <!-- Test Sicuro -->
+        <div class="note-section">
+            <h2>✅ Test Sicuro PRIMA di Eliminare</h2>
+            <p>
+                <strong>REGOLA D'ORO:</strong> SEMPRE testare con <code>-print</code> prima di usare <code>-delete</code>!
+            </p>
+
+            <h3>Passo 1: Verifica Cosa Verrà Eliminato</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Test: mostra file che verrebbero eliminati
+find . -type f ! -name 'importante.txt' -print
+
+# Output esempio:
+# ./temp1.log
+# ./cache.dat
+# ./vecchio.bak</code></pre>
+            </div>
+
+            <h3>Passo 2: Conta Quanti File</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Conta file che verrebbero eliminati
+find . -type f ! -name 'importante.txt' | wc -l
+
+# Output: 3</code></pre>
+            </div>
+
+            <h3>Passo 3: Verifica File da MANTENERE</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Verifica file che NON verranno eliminati
+find . -type f -name 'importante.txt' -print
+
+# Deve mostrare solo il file che vuoi mantenere</code></pre>
+            </div>
+
+            <h3>Passo 4: SOLO ORA Elimina</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Se tutto ok, procedi con delete
+find . -type f ! -name 'importante.txt' -delete
+
+# Verifica risultato
+ls -la</code></pre>
+            </div>
+
+            <div class="note-box success">
+                <strong>✅ Best Practice:</strong><br>
+                1. Test con <code>-print</code><br>
+                2. Controlla output attentamente<br>
+                3. Se dubbioso, fai backup prima<br>
+                4. Solo dopo elimina con <code>-delete</code>
+            </div>
+        </div>
+
+        <!-- Esempi Pratici -->
+        <div class="note-section">
+            <h2>🎯 Esempi Pratici</h2>
+
+            <h3>1. Mantieni Solo config.json</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Test
+find . -type f ! -name 'config.json' -print
+
+# Elimina
+find . -type f ! -name 'config.json' -delete</code></pre>
+            </div>
+
+            <h3>2. Mantieni Solo README.md</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Case-insensitive (readme, README, Readme, ecc.)
+find . -type f ! -iname 'readme.md' -delete</code></pre>
+            </div>
+
+            <h3>3. Solo nella Directory Corrente (Non Ricorsivo)</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># -maxdepth 1 = solo livello corrente
+find . -maxdepth 1 -type f ! -name 'master.txt' -delete</code></pre>
+            </div>
+
+            <h3>4. Mantieni Ultimo Backup</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Mantieni backup più recente
+find . -type f ! -name 'backup_latest.tar.gz' -delete</code></pre>
+            </div>
+
+            <h3>5. Pulizia Directory Temp</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Elimina tutto tranne .gitkeep
+find ./temp -type f ! -name '.gitkeep' -delete</code></pre>
+            </div>
+
+            <h3>6. Mantieni File con Path Specifico</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Mantieni solo ./src/main.py
+find . -type f ! -path './src/main.py' -delete</code></pre>
+            </div>
+        </div>
+
+        <!-- Escludere Multipli File -->
+        <div class="note-section">
+            <h2>🔢 Escludere Multipli File</h2>
+
+            <h3>Metodo 1: Operatori AND</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Mantieni file1.txt E file2.txt
+find . -type f ! -name 'file1.txt' ! -name 'file2.txt' -delete
+
+# Mantieni 3 file
+find . -type f \
+    ! -name 'file1.txt' \
+    ! -name 'file2.txt' \
+    ! -name 'file3.txt' \
+    -delete</code></pre>
+            </div>
+
+            <h3>Metodo 2: Pattern con Wildcard</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Mantieni tutti .txt
+find . -type f ! -name '*.txt' -delete
+
+# Mantieni tutti file che iniziano con "keep_"
+find . -type f ! -name 'keep_*' -delete
+
+# Mantieni tutti .log e .txt
+find . -type f ! \( -name '*.log' -o -name '*.txt' \) -delete</code></pre>
+            </div>
+
+            <h3>Metodo 3: Regex</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Mantieni file con pattern regex
+find . -type f ! -regex '.*\(config\|readme\)\.txt' -delete</code></pre>
+            </div>
+
+            <h3>Metodo 4: File Lista</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># 1. Crea lista file da mantenere
+cat > keep.txt << EOF
+config.json
+README.md
+master.sql
+EOF
+
+# 2. Elimina tutto tranne file in lista
+find . -type f | grep -vFf keep.txt | xargs rm -f</code></pre>
+            </div>
+        </div>
+
+        <!-- Escludere Directory -->
+        <div class="note-section">
+            <h2>📁 Escludere Directory</h2>
+
+            <h3>1. Escludere Directory Specifica</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Elimina tutto tranne file1.txt, ignora directory "backup"
+find . -type f -path './backup' -prune -o \
+       -type f ! -name 'file1.txt' -delete</code></pre>
+            </div>
+
+            <h3>2. Escludere Multipli Directory</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Ignora node_modules e .git
+find . -type d \( -name 'node_modules' -o -name '.git' \) -prune -o \
+       -type f ! -name 'package.json' -delete</code></pre>
+            </div>
+
+            <h3>3. Solo File in Sottodirectory Specifica</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Solo in ./logs/, mantieni latest.log
+find ./logs -maxdepth 1 -type f ! -name 'latest.log' -delete</code></pre>
+            </div>
+        </div>
+
+        <!-- Alternative Più Sicure -->
+        <div class="note-section">
+            <h2>🛡️ Alternative Più Sicure</h2>
+
+            <h3>1. Move invece di Delete</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Crea directory backup
+mkdir -p ./.backup
+
+# Sposta invece di eliminare
+find . -maxdepth 1 -type f ! -name 'master.txt' -exec mv {} ./.backup/ \;
+
+# Controlla risultato
+ls ./.backup/
+
+# Se ok, elimina backup
+rm -rf ./.backup/</code></pre>
+            </div>
+
+            <h3>2. Interattivo con Conferma</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Chiede conferma per ogni file
+find . -type f ! -name 'master.txt' -ok rm {} \;
+# Premi 'y' per confermare ogni file</code></pre>
+            </div>
+
+            <h3>3. Lista Prima, Delete Dopo</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Salva lista in file
+find . -type f ! -name 'master.txt' > files_to_delete.txt
+
+# Controlla file
+cat files_to_delete.txt
+
+# Se ok, elimina
+cat files_to_delete.txt | xargs rm -f</code></pre>
+            </div>
+
+            <h3>4. Dry-Run con xargs</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Test (mostra comando senza eseguire)
+find . -type f ! -name 'master.txt' -print0 | xargs -0 -p rm -f
+
+# -p = prompt (chiede conferma)
+# -0 = null separator (gestisce spazi nei nomi)</code></pre>
+            </div>
+        </div>
+
+        <!-- Casi d'Uso Reali -->
+        <div class="note-section">
+            <h2>💼 Casi d'Uso Reali</h2>
+
+            <h3>Caso 1: Pulizia Directory Download</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>#!/bin/bash
+# Script: cleanup_downloads.sh
+# Mantieni solo file scaricato oggi
+
+cd ~/Downloads
+
+# Mantieni file più recente
+LATEST=$(ls -t | head -1)
+
+# Test
+find . -maxdepth 1 -type f ! -name "$LATEST" -print
+
+# Conferma
+read -p "Eliminare questi file? (y/n) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    find . -maxdepth 1 -type f ! -name "$LATEST" -delete
+    echo "✓ Pulizia completata, mantenuto: $LATEST"
+fi</code></pre>
+            </div>
+
+            <h3>Caso 2: Mantieni Solo Ultimo Backup</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>#!/bin/bash
+# Mantieni solo backup più recente
+
+BACKUP_DIR="/backup"
+LATEST_BACKUP=$(ls -t "$BACKUP_DIR"/backup_*.tar.gz | head -1)
+LATEST_NAME=$(basename "$LATEST_BACKUP")
+
+cd "$BACKUP_DIR"
+
+echo "Ultimo backup: $LATEST_NAME"
+echo "Eliminazione vecchi backup..."
+
+find . -maxdepth 1 -type f -name 'backup_*.tar.gz' \
+     ! -name "$LATEST_NAME" -delete
+
+echo "✓ Mantenuto solo: $LATEST_NAME"</code></pre>
+            </div>
+
+            <h3>Caso 3: Reset Directory Progetto</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>#!/bin/bash
+# Reset progetto, mantieni solo template
+
+PROJECT_DIR="./project"
+
+# File da mantenere
+KEEP_FILES=(
+    "template.html"
+    "config.json"
+    "README.md"
+)
+
+cd "$PROJECT_DIR"
+
+# Costruisci condizioni find
+COND=""
+for file in "${KEEP_FILES[@]}"; do
+    COND="$COND ! -name '$file'"
+done
+
+# Test
+echo "File da eliminare:"
+eval "find . -maxdepth 1 -type f $COND -print"
+
+# Elimina
+eval "find . -maxdepth 1 -type f $COND -delete"
+
+echo "✓ Reset completato"</code></pre>
+            </div>
+
+            <h3>Caso 4: Pulizia Log Vecchi</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code>#!/bin/bash
+# Elimina log vecchi, mantieni current.log
+
+LOG_DIR="/var/log/app"
+
+cd "$LOG_DIR"
+
+# Elimina log più vecchi di 7 giorni, tranne current.log
+find . -type f -name '*.log' \
+     ! -name 'current.log' \
+     -mtime +7 \
+     -delete
+
+echo "✓ Log vecchi eliminati"</code></pre>
+            </div>
+        </div>
+
+        <!-- Varianti Bash/ZSH -->
+        <div class="note-section">
+            <h2>🐚 Varianti Bash/ZSH Alternative</h2>
+
+            <h3>1. Extended Glob (Bash 4+)</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Abilita extended glob
+shopt -s extglob
+
+# Elimina tutto tranne master.txt
+rm -v !(master.txt)
+
+# Elimina tutto tranne 2 file
+rm -v !(file1.txt|file2.txt)
+
+# Elimina tutto tranne pattern
+rm -v !(*.conf|*.json)</code></pre>
+            </div>
+
+            <h3>2. ZSH Globbing</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">ZSH</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Elimina tutto tranne master.txt
+rm -v ^master.txt
+
+# Elimina tutto tranne multipli
+rm -v ^(file1.txt|file2.txt)
+
+# Con ricorsivo
+rm -vr **/*~master.txt</code></pre>
+            </div>
+
+            <h3>3. Loop con Array</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code># Array file da eliminare
+TO_DELETE=($(ls | grep -v 'master.txt'))
+
+# Elimina
+for file in "${TO_DELETE[@]}"; do
+    rm -v "$file"
+done</code></pre>
+            </div>
+        </div>
+
+        <!-- Note Importanti -->
+        <div class="note-section">
+            <h2>📝 Note Importanti</h2>
+
+            <div class="note-box warning">
+                <strong>⚠️ ELIMINAZIONE PERMANENTE:</strong><br>
+                <code>-delete</code> rimuove file DEFINITIVAMENTE.<br>
+                Non vanno nel cestino, non c'è UNDO.<br>
+                Impossibile recuperare senza backup!
+            </div>
+
+            <div class="note-box warning">
+                <strong>⚠️ CASE SENSITIVE:</strong><br>
+                <code>-name 'File.txt'</code> ≠ <code>-name 'file.txt'</code><br>
+                Usa <code>-iname</code> per case-insensitive:<br>
+                <code>find . -type f ! -iname 'file.txt' -delete</code>
+            </div>
+
+            <div class="note-box info">
+                <strong>💡 WILDCARD PATTERNS:</strong><br>
+                <code>*</code> = qualsiasi carattere (zero o più)<br>
+                <code>?</code> = singolo carattere<br>
+                <code>[abc]</code> = uno tra a, b, c<br>
+                <code>*.txt</code> = tutti file .txt<br>
+                <code>file?.log</code> = file1.log, fileA.log, ecc.
+            </div>
+
+            <div class="note-box success">
+                <strong>✅ OPERATORE ! ESCAPE:</strong><br>
+                In alcuni shell, <code>!</code> deve essere escapato:<br>
+                <code>find . -type f \! -name 'file.txt' -delete</code><br>
+                Oppure quotato:<br>
+                <code>find . -type f '!' -name 'file.txt' -delete</code>
+            </div>
+
+            <div class="note-box info">
+                <strong>💡 ALTERNATIVE A -delete:</strong><br>
+                Se <code>-delete</code> non funziona (find vecchio):<br>
+                <code>find . -type f ! -name 'file.txt' -exec rm {} \;</code><br>
+                Oppure con xargs (più veloce):<br>
+                <code>find . -type f ! -name 'file.txt' -print0 | xargs -0 rm</code>
+            </div>
+
+            <div class="note-box warning">
+                <strong>⚠️ PERMESSI:</strong><br>
+                Serve permesso di scrittura sulla directory.<br>
+                File di sistema richiedono <code>sudo</code>.<br>
+                File in uso potrebbero dare errore.
+            </div>
+
+            <div class="note-box success">
+                <strong>✅ MAXDEPTH:</strong><br>
+                <code>-maxdepth 1</code> = solo directory corrente (non ricorsivo)<br>
+                <code>-maxdepth 2</code> = corrente + un livello sotto<br>
+                Default = infinito (tutta la gerarchia)
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="note-section">
+            <h2>🔧 Troubleshooting</h2>
+
+            <h3>Errore: "find: -delete: unknown primary or operator"</h3>
+            <p><strong>Causa:</strong> Versione vecchia di find non supporta -delete</p>
+            <p><strong>Soluzione:</strong> Usa -exec rm</p>
+            <div class="code-block">
+                <pre><code>find . -type f ! -name 'file.txt' -exec rm {} \;</code></pre>
+            </div>
+
+            <h3>File con Spazi nei Nomi Non Eliminati</h3>
+            <p><strong>Causa:</strong> Spazi non gestiti correttamente</p>
+            <p><strong>Soluzione:</strong> Usa -print0 e xargs -0</p>
+            <div class="code-block">
+                <pre><code>find . -type f ! -name 'master.txt' -print0 | xargs -0 rm -f</code></pre>
+            </div>
+
+            <h3>Eliminati File che Dovevano Essere Mantenuti</h3>
+            <p><strong>Causa:</strong> Pattern errato o case sensitivity</p>
+            <p><strong>Soluzione:</strong> Sempre testare prima!</p>
+            <div class="code-block">
+                <pre><code># Test accurato
+find . -type f ! -name 'file.txt' -print | less
+
+# Verifica file da mantenere
+find . -type f -name 'file.txt' -print</code></pre>
+            </div>
+
+            <h3>! non Funziona (Bad substitution)</h3>
+            <p><strong>Causa:</strong> Shell interpreta ! come history expansion</p>
+            <p><strong>Soluzione:</strong> Escapa o quota</p>
+            <div class="code-block">
+                <pre><code># Opzione 1: Escape
+find . -type f \! -name 'file.txt' -delete
+
+# Opzione 2: Quote
+find . -type f '!' -name 'file.txt' -delete
+
+# Opzione 3: -not (GNU find)
+find . -type f -not -name 'file.txt' -delete</code></pre>
+            </div>
+
+            <h3>Permission Denied</h3>
+            <p><strong>Causa:</strong> Mancano permessi</p>
+            <p><strong>Soluzione:</strong></p>
+            <div class="code-block">
+                <pre><code># Mostra errori permessi
+find . -type f ! -name 'file.txt' -delete 2>&1 | grep "Permission denied"
+
+# Se necessario, usa sudo (ATTENZIONE!)
+sudo find . -type f ! -name 'file.txt' -delete</code></pre>
+            </div>
+
+            <h3>Eliminata Directory invece di File</h3>
+            <p><strong>Causa:</strong> Manca -type f</p>
+            <p><strong>Soluzione:</strong> SEMPRE specificare -type f</p>
+            <div class="code-block">
+                <pre><code># SBAGLIATO (può eliminare directory!)
+find . ! -name 'file.txt' -delete
+
+# CORRETTO
+find . -type f ! -name 'file.txt' -delete</code></pre>
+            </div>
+        </div>
+
+        <!-- Link Correlati -->
+        <div class="note-section">
+            <h2>🔗 Appunti Correlati</h2>
+            <ul>
+                <li><a href="find-file-grandi.html">Trovare File Grandi con find</a></li>
+                <li><a href="rm-sicuro.html">Eliminazione Sicura File</a></li>
+                <li><a href="bash-glob-patterns.html">Bash Glob Patterns</a></li>
+                <li><a href="backup-prima-delete.html">Backup Prima di Eliminare</a></li>
+            </ul>
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
