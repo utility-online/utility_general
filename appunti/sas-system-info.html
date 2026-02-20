@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informazioni Sistema: CPU, RAM, Opzioni | SAS Programming</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../appunti-style.css">
+    <link rel="stylesheet" href="../dark-mode.css">
+</head>
+<body>
+    <!-- PULSANTE DARK MODE -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambia tema">
+        🌙
+    </button>
+
+    <!-- Menu Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Menu Laterale -->
+    <nav class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeBtn">&times;</div>
+        <ul class="menu">
+            <li><a href="../index.html">🏠 Home</a></li>
+            <li><a href="../sas-programming.html">📊 SAS Programming</a></li>
+            <li><a href="../oracle.html">🔴 Oracle Database</a></li>
+            <li><a href="../utility.html">🛠️ Utility & Tools</a></li>
+            <li><a href="../linux.html">🐧 Linux & Shell</a></li>
+            <li><a href="https://regexone.com" target="_blank" rel="noopener noreferrer">🔤 RegEx Tutorial ↗</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenuto -->
+    <main class="content note-detail">
+        <a href="../sas-programming.html" class="back-link">← Torna a SAS Programming</a>
+
+        <div class="note-header">
+            <h1>Informazioni Sistema: CPU, RAM, Opzioni</h1>
+            <div class="note-meta">
+                <span>📁 Categoria: <strong>System Info / Diagnostics</strong></span>
+                <span>📅 Aggiornato: <strong>31 Dicembre 2024</strong></span>
+                <span>⏱️ Lettura: <strong>12 min</strong></span>
+            </div>
+            <div class="card-tags">
+                <span class="tag">system info</span>
+                <span class="tag">getoption</span>
+                <span class="tag">macro variables</span>
+                <span class="tag">diagnostics</span>
+            </div>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="note-section">
+            <h2>📋 Descrizione</h2>
+            <p>
+                Questo appunto mostra come <strong>ottenere informazioni di sistema</strong> dalla sessione SAS 
+                corrente: CPU disponibili, memoria RAM, versione SAS, hostname, e opzioni di sistema.
+            </p>
+        </div>
+
+        <!-- Codice Completo -->
+        <div class="note-section">
+            <h2>💻 Codice Completo</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* ============================================================
+   TABELLA INFORMAZIONI DI SISTEMA: CPU, RAM, OPZIONI
+   ============================================================ */</span>
+
+<span class="sas-comment">/* --- 1. Informazioni tramite macro variabili di sistema --- */</span>
+<span class="sas-keyword">%let</span> cpu_count   = <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(cpucount));
+<span class="sas-keyword">%let</span> memsize     = <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(memsize));
+<span class="sas-keyword">%let</span> realmemsize = <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(realmemsize));
+<span class="sas-keyword">%let</span> sortsize    = <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(sortsize));
+<span class="sas-keyword">%let</span> sumsize     = <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(sumsize));
+<span class="sas-keyword">%let</span> work_path   = <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(work));
+
+<span class="sas-keyword">%let</span> sas_version = <span class="sas-auto">&sysvlong</span>;
+<span class="sas-keyword">%let</span> sas_os      = <span class="sas-auto">&sysscp</span>;
+<span class="sas-keyword">%let</span> sas_host    = <span class="sas-auto">&syshostname</span>;
+<span class="sas-keyword">%let</span> sas_date    = <span class="sas-auto">&sysdate9</span>;
+<span class="sas-keyword">%let</span> sas_time    = <span class="sas-auto">&systime</span>;
+
+<span class="sas-comment">/* --- 2. Creazione dataset con le informazioni --- */</span>
+<span class="sas-keyword">DATA</span> system_info;
+    <span class="sas-keyword">LENGTH</span> Categoria $<span class="sas-number">30</span> Parametro $<span class="sas-number">40</span> Valore $<span class="sas-number">100</span> Descrizione $<span class="sas-number">150</span>;
+    
+    <span class="sas-comment">/* === CPU === */</span>
+    Categoria   = <span class="sas-string">"CPU"</span>;
+    Parametro   = <span class="sas-string">"CPUCOUNT"</span>;
+    Valore      = <span class="sas-string">"&cpu_count"</span>;
+    Descrizione = <span class="sas-string">"Numero di CPU/core disponibili per SAS"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"Sistema Operativo"</span>;
+    Valore      = <span class="sas-string">"&sas_os"</span>;
+    Descrizione = <span class="sas-string">"Piattaforma/OS su cui gira SAS"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"Hostname"</span>;
+    Valore      = <span class="sas-string">"&sas_host"</span>;
+    Descrizione = <span class="sas-string">"Nome del server/host"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    <span class="sas-comment">/* === RAM / MEMORIA === */</span>
+    Categoria   = <span class="sas-string">"RAM / Memoria"</span>;
+    Parametro   = <span class="sas-string">"MEMSIZE"</span>;
+    Valore      = <span class="sas-string">"&memsize"</span>;
+    Descrizione = <span class="sas-string">"Memoria massima allocabile da SAS (0 = illimitata)"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"REALMEMSIZE"</span>;
+    Valore      = <span class="sas-string">"&realmemsize"</span>;
+    Descrizione = <span class="sas-string">"Memoria fisica reale disponibile per SAS"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"SORTSIZE"</span>;
+    Valore      = <span class="sas-string">"&sortsize"</span>;
+    Descrizione = <span class="sas-string">"Memoria dedicata alle operazioni di SORT"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"SUMSIZE"</span>;
+    Valore      = <span class="sas-string">"&sumsize"</span>;
+    Descrizione = <span class="sas-string">"Memoria dedicata alle operazioni di sommario/aggregazione"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    <span class="sas-comment">/* === OPZIONI DI SISTEMA === */</span>
+    Categoria   = <span class="sas-string">"Opzioni di Sistema"</span>;
+    Parametro   = <span class="sas-string">"Versione SAS"</span>;
+    Valore      = <span class="sas-string">"&sas_version"</span>;
+    Descrizione = <span class="sas-string">"Versione completa di SAS installata"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"Work Directory"</span>;
+    Valore      = <span class="sas-string">"&work_path"</span>;
+    Descrizione = <span class="sas-string">"Percorso della libreria WORK temporanea"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"Data esecuzione"</span>;
+    Valore      = <span class="sas-string">"&sas_date"</span>;
+    Descrizione = <span class="sas-string">"Data in cui viene eseguito il job"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"Ora esecuzione"</span>;
+    Valore      = <span class="sas-string">"&sas_time"</span>;
+    Descrizione = <span class="sas-string">"Ora in cui viene eseguito il job"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"COMPRESS"</span>;
+    Valore      = <span class="sas-string">"%sysfunc(getoption(compress))"</span>;
+    Descrizione = <span class="sas-string">"Tipo di compressione dataset attiva"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"THREADS"</span>;
+    Valore      = <span class="sas-string">"%sysfunc(getoption(threads))"</span>;
+    Descrizione = <span class="sas-string">"Elaborazione multi-thread abilitata (YES/NO)"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+    
+    Parametro   = <span class="sas-string">"ENCODING"</span>;
+    Valore      = <span class="sas-string">"%sysfunc(getoption(encoding))"</span>;
+    Descrizione = <span class="sas-string">"Encoding dei caratteri attivo nella sessione SAS"</span>;
+    <span class="sas-keyword">OUTPUT</span>;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-comment">/* --- 3. Stampa report --- */</span>
+<span class="sas-keyword">PROC PRINT</span> <span class="sas-keyword">DATA</span>=system_info <span class="sas-keyword">NOOBS</span>;
+    <span class="sas-keyword">TITLE</span> <span class="sas-string">"Informazioni Sistema SAS"</span>;
+    <span class="sas-keyword">VAR</span> Categoria Parametro Valore Descrizione;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+        </div>
+
+        <!-- Output Esempio -->
+        <div class="note-section">
+            <h2>📊 Output Esempio</h2>
+
+            <div class="code-block">
+                <pre><code>Informazioni Sistema SAS
+
+Categoria         Parametro            Valore              Descrizione
+----------------- -------------------- ------------------- ----------------------------------
+CPU               CPUCOUNT             8                   Numero di CPU/core disponibili
+CPU               Sistema Operativo    LIN X64             Piattaforma/OS su cui gira SAS
+CPU               Hostname             sas-server-prod     Nome del server/host
+
+RAM / Memoria     MEMSIZE              0                   Memoria massima allocabile (illimitata)
+RAM / Memoria     REALMEMSIZE          64G                 Memoria fisica reale disponibile
+RAM / Memoria     SORTSIZE             2G                  Memoria per operazioni SORT
+RAM / Memoria     SUMSIZE              0                   Memoria per sommari/aggregazione
+
+Opzioni Sistema   Versione SAS         9.4 (TS1M7)         Versione completa installata
+Opzioni Sistema   Work Directory       /tmp/SAS_work123    Percorso libreria WORK
+Opzioni Sistema   Data esecuzione      31DEC2024           Data esecuzione job
+Opzioni Sistema   Ora esecuzione       14:30:15            Ora esecuzione job
+Opzioni Sistema   COMPRESS             CHAR                Tipo compressione dataset
+Opzioni Sistema   THREADS              YES                 Multi-thread abilitato
+Opzioni Sistema   ENCODING             utf-8               Encoding caratteri</code></pre>
+            </div>
+        </div>
+
+        <!-- Spiegazione Componenti -->
+        <div class="note-section">
+            <h2>🔍 Spiegazione Componenti</h2>
+
+            <h3>1️⃣ GETOPTION() - Legge Opzioni SAS</h3>
+            <div class="code-block">
+                <pre><code><span class="sas-keyword">%let</span> cpu_count = <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(cpucount));</code></pre>
+            </div>
+            <p>
+                <strong>GETOPTION(option-name)</strong> ritorna il valore corrente di un'opzione SAS.<br>
+                Deve essere usata dentro <code>%SYSFUNC</code> per funzionare in macro.
+            </p>
+
+            <h3>Opzioni Sistema Principali:</h3>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">CPUCOUNT</div>
+                    <div class="option-description">
+                        <strong>Numero di CPU/core</strong><br>
+                        Quanti processori SAS può usare per elaborazione parallela<br>
+                        Esempio: <code>8</code> = 8 core disponibili<br>
+                        Influenza PROC SORT, PROC SQL con THREADS, ecc.
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">MEMSIZE</div>
+                    <div class="option-description">
+                        <strong>Limite memoria allocabile</strong><br>
+                        Memoria massima che SAS può usare<br>
+                        <code>0</code> = illimitato (usa tutta la RAM disponibile)<br>
+                        Valori: <code>2G</code>, <code>16G</code>, <code>64G</code>, ecc.<br>
+                        Impostato in config o all'avvio: <code>-memsize 32G</code>
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">REALMEMSIZE</div>
+                    <div class="option-description">
+                        <strong>RAM fisica disponibile</strong><br>
+                        Memoria fisica reale del server<br>
+                        Esempio: <code>64G</code> = 64 GB di RAM installata<br>
+                        Valore massimo teorico che SAS potrebbe usare
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">SORTSIZE</div>
+                    <div class="option-description">
+                        <strong>Memoria per SORT</strong><br>
+                        RAM dedicata a operazioni di ordinamento (PROC SORT)<br>
+                        <code>0</code> o <code>MAX</code> = usa tutta la memoria disponibile<br>
+                        Valori tipici: <code>2G</code>, <code>4G</code><br>
+                        Sort grandi beneficiano di più memoria
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">SUMSIZE</div>
+                    <div class="option-description">
+                        <strong>Memoria per aggregazioni</strong><br>
+                        RAM per operazioni CLASS/BY con sommari<br>
+                        <code>0</code> = usa algoritmo ottimale automatico<br>
+                        Raramente necessario modificare
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">WORK</div>
+                    <div class="option-description">
+                        <strong>Percorso libreria WORK</strong><br>
+                        Directory dove SAS salva file temporanei<br>
+                        Esempio: <code>/tmp/SAS_work123</code><br>
+                        Cancellata automaticamente a fine sessione<br>
+                        Importante per performance: preferire SSD/storage veloce
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">COMPRESS</div>
+                    <div class="option-description">
+                        <strong>Compressione dataset</strong><br>
+                        Tipo di compressione applicata ai dataset<br>
+                        <code>NO</code> = nessuna compressione<br>
+                        <code>YES</code> o <code>CHAR</code> = compressione RLE<br>
+                        <code>BINARY</code> = compressione Ross<br>
+                        Risparmia spazio disco, overhead CPU minimo
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">THREADS</div>
+                    <div class="option-description">
+                        <strong>Multi-threading</strong><br>
+                        Abilita elaborazione parallela multi-thread<br>
+                        <code>YES</code> = attivo (consigliato)<br>
+                        <code>NO</code> = single-thread<br>
+                        Velocizza SORT, SQL, alcuni DATA step
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">ENCODING</div>
+                    <div class="option-description">
+                        <strong>Codifica caratteri</strong><br>
+                        Encoding della sessione SAS<br>
+                        Esempi: <code>utf-8</code>, <code>wlatin1</code>, <code>latin1</code><br>
+                        Importante per caratteri speciali/internazionali
+                    </div>
+                </div>
+            </div>
+
+            <h3>2️⃣ Macro Variabili Automatiche</h3>
+
+            <div class="options-list">
+                <div class="option-item">
+                    <div class="option-name">&SYSVLONG</div>
+                    <div class="option-description">
+                        <strong>Versione SAS completa</strong><br>
+                        Esempio: <code>9.4 (TS1M7)</code><br>
+                        Include versione e maintenance release
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">&SYSSCP</div>
+                    <div class="option-description">
+                        <strong>Sistema operativo</strong><br>
+                        Esempi:<br>
+                        <code>LIN X64</code> = Linux 64-bit<br>
+                        <code>WIN</code> = Windows<br>
+                        <code>HP UX</code> = HP-UX<br>
+                        <code>AIX</code> = IBM AIX
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">&SYSHOSTNAME</div>
+                    <div class="option-description">
+                        <strong>Nome host/server</strong><br>
+                        Nome della macchina che esegue SAS<br>
+                        Esempio: <code>sas-prod-server01</code><br>
+                        Utile per log multi-server
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">&SYSDATE9</div>
+                    <div class="option-description">
+                        <strong>Data esecuzione</strong><br>
+                        Formato DATE9: <code>31DEC2024</code><br>
+                        Data di inizio sessione SAS
+                    </div>
+                </div>
+
+                <div class="option-item">
+                    <div class="option-name">&SYSTIME</div>
+                    <div class="option-description">
+                        <strong>Ora esecuzione</strong><br>
+                        Formato TIME: <code>14:30:15</code><br>
+                        Ora di inizio sessione SAS
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interpretazione Valori -->
+        <div class="note-section">
+            <h2>📖 Interpretazione Valori</h2>
+
+            <h3>Memoria (MEMSIZE, REALMEMSIZE, SORTSIZE)</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Valore</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Significato</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Esempio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><code>0</code></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Illimitato / Default sistema</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">MEMSIZE=0 → usa tutta RAM</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><code>2G</code></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">2 Gigabyte</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SORTSIZE=2G</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><code>16G</code></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">16 Gigabyte</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">MEMSIZE=16G</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><code>128M</code></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">128 Megabyte</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SORTSIZE=128M</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><code>MAX</code></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Massimo disponibile</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SORTSIZE=MAX</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Conversioni Unità:</h3>
+            <ul>
+                <li>1 KB = 1,024 Bytes</li>
+                <li>1 MB = 1,024 KB = 1,048,576 Bytes</li>
+                <li>1 GB = 1,024 MB = 1,073,741,824 Bytes</li>
+                <li>1 TB = 1,024 GB</li>
+            </ul>
+
+            <h3>CPU Count:</h3>
+            <ul>
+                <li><code>CPUCOUNT=4</code> → 4 core disponibili</li>
+                <li><code>CPUCOUNT=16</code> → 16 core (server potente)</li>
+                <li><code>CPUCOUNT=64</code> → 64 core (server enterprise)</li>
+            </ul>
+
+            <h3>Versione SAS:</h3>
+            <ul>
+                <li><code>9.4 (TS1M0)</code> → SAS 9.4, Technical Support 1, Maintenance 0</li>
+                <li><code>9.4 (TS1M7)</code> → SAS 9.4, TS1, M7 (più recente)</li>
+                <li><code>Viya 3.5</code> → SAS Viya versione 3.5</li>
+            </ul>
+        </div>
+
+        <!-- Varianti Utili -->
+        <div class="note-section">
+            <h2>🔧 Varianti Utili</h2>
+
+            <h3>1️⃣ Stampa nel Log</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Stampa info sistema nel log */</span>
+<span class="sas-keyword">%put</span> <span class="sas-string">=============== SYSTEM INFO ===============</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">CPU Count:    %sysfunc(getoption(cpucount))</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Real Memory:  %sysfunc(getoption(realmemsize))</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Mem Size:     %sysfunc(getoption(memsize))</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Version:      &sysvlong</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">OS:           &sysscp</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Hostname:     &syshostname</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Date/Time:    &sysdate9 &systime</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Work Path:    %sysfunc(getoption(work))</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Threads:      %sysfunc(getoption(threads))</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">=========================================</span>;</code></pre>
+            </div>
+
+            <h3>Output Log:</h3>
+            <div class="code-block">
+                <pre><code>=============== SYSTEM INFO ===============
+CPU Count:    8
+Real Memory:  64G
+Mem Size:     0
+Version:      9.4 (TS1M7)
+OS:           LIN X64
+Hostname:     sas-prod-01
+Date/Time:    31DEC2024 14:30:15
+Work Path:    /tmp/SAS_work123
+Threads:      YES
+=========================================</code></pre>
+            </div>
+
+            <h3>2️⃣ Macro per Report Automatico</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Macro che stampa info sistema in report */</span>
+<span class="sas-keyword">%MACRO</span> print_system_info;
+    <span class="sas-keyword">%put</span> <span class="sas-string">========================================</span>;
+    <span class="sas-keyword">%put</span> <span class="sas-string">JOB STARTED: &sysdate9 at &systime</span>;
+    <span class="sas-keyword">%put</span> <span class="sas-string">Server: &syshostname (&sysscp)</span>;
+    <span class="sas-keyword">%put</span> <span class="sas-string">SAS Version: &sysvlong</span>;
+    <span class="sas-keyword">%put</span> <span class="sas-string">Resources: %sysfunc(getoption(cpucount)) CPUs, %sysfunc(getoption(realmemsize)) RAM</span>;
+    <span class="sas-keyword">%put</span> <span class="sas-string">========================================</span>;
+<span class="sas-keyword">%MEND</span> print_system_info;
+
+<span class="sas-comment">/* Uso */</span>
+<span class="sas-keyword">%print_system_info</span>;</code></pre>
+            </div>
+
+            <h3>3️⃣ Salva Info in Permanent Dataset</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Crea permanent log di ogni esecuzione */</span>
+<span class="sas-keyword">LIBNAME</span> logs <span class="sas-string">"/path/to/logs"</span>;
+
+<span class="sas-keyword">DATA</span> logs.execution_log;
+    <span class="sas-keyword">SET</span> logs.execution_log;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-keyword">DATA</span> logs.execution_log;
+    <span class="sas-keyword">LENGTH</span> 
+        job_id $<span class="sas-number">50</span>
+        hostname $<span class="sas-number">50</span>
+        os $<span class="sas-number">20</span>
+        sas_version $<span class="sas-number">50</span>
+        cpu_count <span class="sas-number">8</span>
+        memsize $<span class="sas-number">20</span>
+        work_path $<span class="sas-number">200</span>;
+    
+    job_id      = <span class="sas-string">"&sysjobid"</span>;
+    exec_date   = <span class="sas-string">"&sysdate9"</span>d;
+    exec_time   = <span class="sas-string">"&systime"</span>t;
+    hostname    = <span class="sas-string">"&syshostname"</span>;
+    os          = <span class="sas-string">"&sysscp"</span>;
+    sas_version = <span class="sas-string">"&sysvlong"</span>;
+    cpu_count   = <span class="sas-keyword">INPUT</span>(<span class="sas-string">"%sysfunc(getoption(cpucount))"</span>, <span class="sas-number">8.</span>);
+    memsize     = <span class="sas-string">"%sysfunc(getoption(memsize))"</span>;
+    work_path   = <span class="sas-string">"%sysfunc(getoption(work))"</span>;
+    
+    <span class="sas-keyword">OUTPUT</span>;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+
+            <h3>4️⃣ Export Excel</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Esporta info sistema in Excel */</span>
+<span class="sas-keyword">ODS EXCEL FILE</span>=<span class="sas-string">"/output/system_info.xlsx"</span> 
+    <span class="sas-keyword">OPTIONS</span>(sheet_name=<span class="sas-string">"System Info"</span>);
+    
+<span class="sas-keyword">PROC PRINT</span> <span class="sas-keyword">DATA</span>=system_info <span class="sas-keyword">NOOBS</span>;
+    <span class="sas-keyword">TITLE</span> <span class="sas-string">"SAS System Information"</span>;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-keyword">ODS EXCEL CLOSE</span>;</code></pre>
+            </div>
+
+            <h3>5️⃣ Tutte le Opzioni SAS</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Lista TUTTE le opzioni SAS attive */</span>
+<span class="sas-keyword">PROC OPTIONS</span>;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-comment">/* Opzioni con valori specifici */</span>
+<span class="sas-keyword">PROC OPTIONS</span> <span class="sas-keyword">OPTION</span>=memsize;
+<span class="sas-keyword">RUN</span>;
+
+<span class="sas-comment">/* Opzioni gruppo (memory) */</span>
+<span class="sas-keyword">PROC OPTIONS</span> <span class="sas-keyword">GROUP</span>=memory;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+        </div>
+
+        <!-- Altre Opzioni Utili -->
+        <div class="note-section">
+            <h2>🔍 Altre Opzioni SAS Utili</h2>
+
+            <h3>Performance:</h3>
+            <div class="code-block">
+                <pre><code><span class="sas-keyword">%put</span> CPUCOUNT:   <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(cpucount));
+<span class="sas-keyword">%put</span> THREADS:    <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(threads));
+<span class="sas-keyword">%put</span> SORTSIZE:   <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(sortsize));
+<span class="sas-keyword">%put</span> BUFSIZE:    <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(bufsize));
+<span class="sas-keyword">%put</span> BUFNO:      <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(bufno));</code></pre>
+            </div>
+
+            <h3>Storage:</h3>
+            <div class="code-block">
+                <pre><code><span class="sas-keyword">%put</span> WORK:       <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(work));
+<span class="sas-keyword">%put</span> UTILLOC:    <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(utilloc));
+<span class="sas-keyword">%put</span> COMPRESS:   <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(compress));
+<span class="sas-keyword">%put</span> MSGLEVEL:   <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(msglevel));</code></pre>
+            </div>
+
+            <h3>Logging:</h3>
+            <div class="code-block">
+                <pre><code><span class="sas-keyword">%put</span> LOG:        <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(log));
+<span class="sas-keyword">%put</span> PRINT:      <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(print));
+<span class="sas-keyword">%put</span> FULLSTIMER: <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(fullstimer));
+<span class="sas-keyword">%put</span> MPRINT:     <span class="sas-keyword">%sysfunc</span>(<span class="sas-function">getoption</span>(mprint));</code></pre>
+            </div>
+        </div>
+
+        <!-- Casi d'Uso -->
+        <div class="note-section">
+            <h2>🎯 Casi d'Uso Pratici</h2>
+
+            <h3>Caso 1: Header Job Automatico</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* All'inizio di ogni job */</span>
+<span class="sas-keyword">%put</span> <span class="sas-string">====================================</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Job: MONTHLY_REPORT_ETL</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Started: &sysdate9 at &systime</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Server: &syshostname</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">Resources: %sysfunc(getoption(cpucount)) cores</span>;
+<span class="sas-keyword">%put</span> <span class="sas-string">====================================</span>;</code></pre>
+            </div>
+
+            <h3>Caso 2: Performance Check</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Verifica configurazione ottimale */</span>
+<span class="sas-keyword">DATA</span> _null_;
+    cpu = <span class="sas-keyword">INPUT</span>(<span class="sas-string">"%sysfunc(getoption(cpucount))"</span>, <span class="sas-number">8.</span>);
+    threads = <span class="sas-string">"%sysfunc(getoption(threads))"</span>;
+    
+    <span class="sas-keyword">IF</span> cpu >= <span class="sas-number">8</span> <span class="sas-keyword">AND</span> threads = <span class="sas-string">"NO"</span> <span class="sas-keyword">THEN</span> <span class="sas-keyword">DO</span>;
+        <span class="sas-keyword">PUT</span> <span class="sas-string">"WARNING: Multi-threading disabled with"</span> cpu <span class="sas-string">"cores!"</span>;
+        <span class="sas-keyword">PUT</span> <span class="sas-string">"Consider enabling: OPTIONS THREADS;"</span>;
+    <span class="sas-keyword">END</span>;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+
+            <h3>Caso 3: Environment Validation</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Verifica ambiente produzione */</span>
+<span class="sas-keyword">%MACRO</span> check_environment;
+    <span class="sas-keyword">%IF</span> <span class="sas-string">&syshostname</span> = <span class="sas-string">PROD-SERVER</span> <span class="sas-keyword">%THEN %DO</span>;
+        <span class="sas-keyword">%put</span> <span class="sas-string">PRODUCTION ENVIRONMENT DETECTED</span>;
+        <span class="sas-keyword">%put</span> <span class="sas-string">Extra validation enabled...</span>;
+    <span class="sas-keyword">%END</span>;
+    <span class="sas-keyword">%ELSE %DO</span>;
+        <span class="sas-keyword">%put</span> <span class="sas-string">Development/Test environment</span>;
+    <span class="sas-keyword">%END</span>;
+<span class="sas-keyword">%MEND</span>;
+
+<span class="sas-keyword">%check_environment</span>;</code></pre>
+            </div>
+
+            <h3>Caso 4: Documentazione Automatica</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">SAS</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Copia</button>
+                </div>
+                <pre><code><span class="sas-comment">/* Allega info sistema a ogni report */</span>
+<span class="sas-keyword">FOOTNOTE1</span> <span class="sas-string">"Generated on &syshostname at &sysdate9 &systime"</span>;
+<span class="sas-keyword">FOOTNOTE2</span> <span class="sas-string">"SAS Version: &sysvlong"</span>;
+
+<span class="sas-keyword">PROC PRINT</span> <span class="sas-keyword">DATA</span>=results;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+        </div>
+
+        <!-- Note Importanti -->
+        <div class="note-section">
+            <h2>📝 Note Importanti</h2>
+
+            <div class="note-box info">
+                <strong>💡 GETOPTION() in Macro:</strong><br>
+                Deve essere usato con <code>%SYSFUNC</code>:<br>
+                ✅ <code>%sysfunc(getoption(cpucount))</code><br>
+                ❌ <code>getoption(cpucount)</code> (non funziona in macro)
+            </div>
+
+            <div class="note-box success">
+                <strong>✅ Valori "0" vs "MAX":</strong><br>
+                <code>MEMSIZE=0</code> → illimitato (usa tutta RAM)<br>
+                <code>SORTSIZE=MAX</code> → massimo disponibile<br>
+                Spesso equivalenti ma semantica diversa
+            </div>
+
+            <div class="note-box warning">
+                <strong>⚠️ REALMEMSIZE vs MEMSIZE:</strong><br>
+                <code>REALMEMSIZE</code> = RAM fisica server (es: 64G)<br>
+                <code>MEMSIZE</code> = limite impostato per SAS (es: 32G o 0)<br>
+                Se MEMSIZE=0, SAS può usare tutta REALMEMSIZE
+            </div>
+
+            <div class="note-box info">
+                <strong>💡 WORK Directory:</strong><br>
+                Directory temporanea, cancellata a fine sessione<br>
+                Performance migliore se su SSD o storage veloce<br>
+                Può riempirsi con sort/join grandi → monitorare spazio
+            </div>
+
+            <div class="note-box success">
+                <strong>✅ THREADS Performance:</strong><br>
+                <code>THREADS=YES</code> consigliato con CPUCOUNT ≥ 4<br>
+                Velocizza SORT, SQL, alcuni DATA step<br>
+                Overhead minimo, benefit significativo
+            </div>
+
+            <div class="note-box info">
+                <strong>💡 Macro Variables Automatiche:</strong><br>
+                Popolate automaticamente da SAS all'avvio<br>
+                Read-only, non modificabili<br>
+                Disponibili ovunque nella sessione
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="note-section">
+            <h2>🔧 Troubleshooting</h2>
+
+            <h3>GETOPTION() ritorna vuoto</h3>
+            <p><strong>Causa:</strong> Opzione non esistente o non supportata</p>
+            <p><strong>Soluzione:</strong> Verifica nome opzione con PROC OPTIONS</p>
+            <div class="code-block">
+                <pre><code><span class="sas-keyword">PROC OPTIONS</span>;
+<span class="sas-keyword">RUN</span>;</code></pre>
+            </div>
+
+            <h3>Macro variabile &SYSVLONG vuota</h3>
+            <p><strong>Causa:</strong> Versione SAS molto vecchia</p>
+            <p><strong>Soluzione:</strong> Usa &SYSVER (versione breve)</p>
+            <div class="code-block">
+                <pre><code><span class="sas-keyword">%put</span> Version: <span class="sas-auto">&sysver</span>; <span class="sas-comment">/* 9.4 */</span></code></pre>
+            </div>
+
+            <h3>Valori memoria strani (negativi, enormi)</h3>
+            <p><strong>Causa:</strong> Formato numerico interpretato male</p>
+            <p><strong>Soluzione:</strong> Lascia come stringa o converti correttamente</p>
+
+            <h3>OUTPUT dataset vuoto</h3>
+            <p><strong>Causa:</strong> Manca statement OUTPUT in DATA step</p>
+            <p><strong>Soluzione:</strong> Aggiungi OUTPUT dopo ogni set di variabili</p>
+        </div>
+
+        <!-- Link Correlati -->
+        <div class="note-section">
+            <h2>🔗 Appunti Correlati</h2>
+            <ul>
+                <li><a href="sas-options-performance.html">Opzioni SAS per Performance</a></li>
+                <li><a href="sas-macro-variables.html">Macro Variabili Automatiche</a></li>
+                <li><a href="proc-options.html">PROC OPTIONS</a></li>
+                <li><a href="fullstimer-statistics.html">FULLSTIMER e Statistiche</a></li>
+            </ul>
+        </div>
+
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="../theme-toggle.js"></script>
+</body>
+</html>
